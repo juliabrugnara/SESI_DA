@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>InovaTech Brasil | Inscrição</title>
+</head>
+<body>
+
+    <header>
+        <center>
+            <p>
+                <a href="index.html">Início</a> | 
+                <a href="evento.html">O Evento</a> | 
+                <a href="inscricao.html">Inscrição</a> | 
+                <a href="laboratorio.html">Laboratório</a>
+            </p>
+            <hr>
+            <h1>InovaTech Brasil</h1>
+            <p><em>Formulário Oficial de Inscrição e Envio de Projetos</em></p>
+            <hr>
+        </center>
+    </header>
+
+    <main>
+        <h2>Garanta sua Vaga e Mostre seu Talento!</h2>
+        <p>Preencha os dados abaixo com atenção. Seus dados profissionais ficarão disponíveis para as empresas patrocinadoras.</p>
+
+        <!-- Formulário -->
+        <form action="sucesso.html" method="get">
+            
+            <!-- Dados Pessoais -->
+            <fieldset>
+                <legend>Dados Pessoais</legend>
+                
+                <label for="nome">Nome:</label>
+                <input type="text" id="nome" name="nome" required><br><br>
+
+                <label for="sobrenome">Sobrenome:</label>
+                <input type="text" id="sobrenome" name="sobrenome" required><br><br>
+
+                <label for="cpf">CPF (Somente números):</label>
+                <input type="number" id="cpf" name="cpf" required><br><br>
+
+                <label for="rg">RG:</label>
+                <input type="text" id="rg" name="rg" required><br><br>
+
+                <label for="nascimento">Data de Nascimento:</label>
+                <input type="date" id="nascimento" name="nascimento" required><br><br>
+
+                <label for="email">E-mail para contato:</label>
+                <input type="email" id="email" name="email" required><br><br>
+
+                <label for="telefone">Telefone / WhatsApp:</label>
+                <input type="tel" id="telefone" name="telefone" required><br><br>
+
+                <label for="senha">Crie uma senha para acessar o portal depois:</label>
+                <input type="password" id="senha" name="senha" required>
+            </fieldset>
+            <br>
+
+            <!-- Dados Acadêmicos/Profissionais -->
+            <fieldset>
+                <legend>Perfil Acadêmico e Profissional</legend>
+
+                <label for="instituicao">Escola / Faculdade / Empresa:</label>
+                <input type="text" id="instituicao" name="instituicao"><br><br>
+
+                <label for="curso">Curso ou Cargo Atual:</label>
+                <input type="text" id="curso" name="curso"><br><br>
+
+                <label for="github">Link do seu GitHub ou Portfólio (URL):</label>
+                <input type="url" id="github" name="github"><br><br>
+                
+                <label for="curriculo">Anexe seu Currículo para o Banco de Talentos (File):</label>
+                <input type="file" id="curriculo" name="curriculo">
+            </fieldset>
+            <br>
+
+            <!-- Participação -->
+            <fieldset>
+                <legend>Preferências e Competições</legend>
+
+                <p>Quais dias você vai participar? (Checkbox)</p>
+                <input type="checkbox" id="dia1" name="dia1" value="12_nov">
+                <label for="dia1">Dia 12 (Palestras de Inspiração)</label><br>
+                <input type="checkbox" id="dia2" name="dia2" value="13_nov">
+                <label for="dia2">Dia 13 (Palco dos Alunos e Code Challenge)</label><br>
+                <input type="checkbox" id="dia3" name="dia3" value="14_nov">
+                <label for="dia3">Dia 14 (Premiações e Entrevistas)</label><br><br>
+
+                <label for="trilhas">Qual o seu maior interesse no evento? (Select):</label>
+                <select id="trilhas" name="trilhas">
+                    <option value="vagas">Conseguir uma vaga de estágio/emprego</option>
+                    <option value="aprender">Assistir palestras e aprender</option>
+                    <option value="competir">Participar do Code Challenge / Hackathon</option>
+                    <option value="palestrar">Apresentar meu próprio projeto no palco</option>
+                </select><br><br>
+
+                <p>Necessidade de Alimentação Especial? (Radio)</p>
+                <input type="radio" id="comum" name="alimentacao" value="comum" checked>
+                <label for="comum">Nenhuma</label><br>
+                <input type="radio" id="vegetariana" name="alimentacao" value="vegetariana">
+                <label for="vegetariana">Vegetariana</label><br>
+                <input type="radio" id="vegana" name="alimentacao" value="vegana">
+                <label for="vegana">Vegana</label><br><br>
+
+                <label for="cracha">Escolha a cor da corda do seu crachá (Color):</label>
+                <input type="color" id="cracha" name="cracha" value="#ff8c00"><br><br>
+
+                <label for="expectativa">Nível de conhecimento atual em programação (Range):</label><br>
+                Iniciante <input type="range" id="expectativa" name="expectativa" min="0" max="100" value="50"> Avançado
+                <br><br>
+
+                <label for="projeto">Se você quiser apresentar um projeto no palco, descreva-o rapidamente aqui (Textarea):</label><br>
+                <textarea id="projeto" name="projeto" rows="4" cols="60" placeholder="Ex: Criei um app escolar usando Java..."></textarea>
+            </fieldset>
+            <br>
+
+            <!-- Botão de Envio -->
+            <center>
+                <button type="submit"><strong>Enviar Inscrição</strong></button>
+                <button type="reset">Limpar Formulário</button>
+            </center>
+
+        </form>
+    </main>
+
+    <hr>
+    <footer>
+        <center>
+            <p><small>&copy; InovaTech Brasil. O palco é seu!</small></p>
+        </center>
+    </footer>
+
+</body>
+</html>
