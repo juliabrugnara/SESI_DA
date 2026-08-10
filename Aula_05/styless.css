@@ -1,87 +1,117 @@
 body {
-    display: flex;
     margin: 0px;
 }
 
-.le {
-    width: 40%;
-    height: 945px;
-    background-image: url('imagens/pug.png');
-    background-size: cover;
-    background-position: center;
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: black;
+    height: 100px;
+    color: white;
+    padding: 20px;
     text-align: center;
 }
 
-.le h1 {
-    margin-top: 50px;
-    font-size: 50px;
+#perfil {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
 }
 
-.ld {
-    width: 60%;
+header p {
+    font-size: 25px;
+    text-transform: uppercase;
+    padding-right: 10px;
+    font-weight: bold;
+}
+
+.pesquisa {
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
+    height: 70px;
+    margin: 80px;
+}
+
+.pesquisa input {
+    width: 500px;
+    border-radius: 50px;
+    font-size: 30px;
+    padding-left: 30px;
+}
+
+.grupo-cards {
+    display: flex;
     justify-content: space-around;
 }
 
-.ld h1{
-    font-size: 50px;
-    text-align: center;
-}
-
-.btn{
-    display: flex;
-    justify-content: center;
-    width: 400px;
-    border: solid 1px black;
-    border-radius: 50px;
-    padding: 10px;
-    margin: 10px;
+.card {
+    height: 284px;
+    width: 219px;
+    background-position: center;
+    background-size: cover;
+    border-radius: 34px;
     cursor: pointer;
+    transition-delay: 0.2s;
+    transition-duration: 0.2s, 0.2s;
 }
 
-.btn:hover{
-    background-color: #5a5858;
+.card:hover {
+    opacity: 0.7;
 }
 
-.btn img{
-    width: 50px;
-    height: 50px;
-    margin-right: 50px;
-}
-
-.saiba-mais{
-   margin-top: -175px;
-}
-
-.saiba-mais a{
-    color:blue
-}
-
-.entrar-bnt{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 300px;
-    height: 50px;
-    background-color: black;
-    border-radius: 50px;
-    font-size: 20px;
-    font-weight: bold;
-    text-transform: uppercase;
+.card p {
     color: white;
-    border: 1px solid black;
+    font-size: 40px;
+    padding-left: 25px;
+    padding-top: 175px;
+}
+
+.grupo-anuncio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    height: 430px;
+    margin-top: 50px;
+
+}
+
+
+.card-anuncio {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 70%;
+    height: 70%;
+    border-radius: 70px;
+
+}
+
+.anuncio-le {
+    width: 50%;
+    text-align: center;
+    font-weight: bold;
+}
+
+.anuncio-le button {
+    font-size: 40px;
+    background-color: black;
+    color: white;
+    height: 60px;
+    width: 50%;
+    border-radius: 50px;
     cursor: pointer;
-    text-decoration:none;
-
 }
 
-.entrar-bnt:hover{
-    background-color:white;
-    color: black;
-    border: 1px solid black;
+.anuncio-ld {
+    width: 50%;
+    height: 80%;
+    background-image: url(gato_laranja.jpg);
+    background-size: cover;
+    background-position: center;
+    border-radius: 70px;
+    margin: 20px;
 }
-
-
 
