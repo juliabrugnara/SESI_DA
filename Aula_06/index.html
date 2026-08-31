@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="PT-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,25 +9,13 @@
 
 <body>
 
-<input id="campo1" type="text" value="250">
-<input id="campo1" type="text">
-<button onclick="somaDeDoisValores()" >calcular</button>
+    <input id="campo1" type="text" value="250">
+    <input id="campo1" type="text">
+    <button onclick="somaDeDoisValores()">calcular</button>
 
-    <h1>Resultado: 0 </h1> 
-    
-    <script>
+    <h1>Resultado: 0 </h1>
 
-        const campo1 = document.getElementById("campo1")
-        const campo2 = document.getElementById("campo2")
-        const resultado = document.getElementsByTagName("h1")[0];
-    
-        function somaDeDoisValores(){
-            var soma = Number(campo1.value) + Number(campo2.value);
-        //    alert("A SOMA DOS DOIS VALORES É : " + soma);
-            resultado.innerHTML = "Resultado: " + soma;
-    }
-         
-      </script>
+    <script src="./script.js"> </script>
 
 </body>
 
