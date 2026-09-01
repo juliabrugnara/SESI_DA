@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Jogo da Velha</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div>
+    <label>Quem começa: </label>
+    <select id="escolhaInicial" onchange="reiniciar()">
+      <option value="X">X</option>
+      <option value="O">O</option>
+    </select>
+  </div>
+
+  <h2>Vez do: <span id="jogador">X</span></h2>
+
+  <div>
+    <button id="1" class="casa" onclick="jogar(this)"></button>
+    <button id="2" class="casa" onclick="jogar(this)"></button>
+    <button id="3" class="casa" onclick="jogar(this)"></button><br>
+    <button id="4" class="casa" onclick="jogar(this)"></button>
+    <button id="5" class="casa" onclick="jogar(this)"></button>
+    <button id="6" class="casa" onclick="jogar(this)"></button><br>
+    <button id="7" class="casa" onclick="jogar(this)"></button>
+    <button id="8" class="casa" onclick="jogar(this)"></button>
+    <button id="9" class="casa" onclick="jogar(this)"></button>
+  </div>
+
+  <button class="btn-reiniciar" onclick="reiniciar()">Reiniciar</button>
+
+  <script src="script.js"></script>
+</body>
+</html>
