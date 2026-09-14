@@ -1,28 +1,64 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="PT-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>JOGO DA VELHA</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        p {
+            margin: 5px 0;
+        }
+
+        button {
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            font-weight: bold;
+            vertical-align: top;
+            margin: 2px;
+            cursor: pointer;
+        }
+
+        .btn-reiniciar {
+            width: 160px;
+            height: 35px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+    </style>
 </head>
 
-
 <body>
-    <h1> Jogo da Velha # </h1>
-<button id="1" onclick="jogar('1')"></button>
-<button id="2" onclick="jogar('2')"></button>
-<button id="3" onclick="jogar('3')"></button>
-<br>
-<button id="4" onclick="jogar('4')"></button>
-<button id="5" onclick="jogar('5')"></button>
-<button id="6" onclick="jogar('6')"></button>
-<br>
-<button id="7" onclick="jogar('7')"></button>
-<button id="8" onclick="jogar('8')"></button>
-<button id="9" onclick="jogar('9')"></button>
+    <h1>Jogo da velha # </h1>
+    <p id="total_de_jogadas">Total de jogadas: 0 </p>
+    <p id="total_o">Total de vitorias O : 0 </p>
+    <p id="total_x">Total de vitorias X : 0 </p>
+    <p id="vez_jogador">Começa jogando: <b>O</b></p>
 
-<script src="./script.js"></script>
+    <br>
 
+    <button id="1" onclick="jogar('1')"></button>
+    <button id="2" onclick="jogar('2')"></button>
+    <button id="3" onclick="jogar('3')"></button>
+    <br>
+    <button id="4" onclick="jogar('4')"></button>
+    <button id="5" onclick="jogar('5')"></button>
+    <button id="6" onclick="jogar('6')"></button>
+    <br>
+    <button id="7" onclick="jogar('7')"></button>
+    <button id="8" onclick="jogar('8')"></button>
+    <button id="9" onclick="jogar('9')"></button>
+
+    <br>
+    <button class="btn-reiniciar" onclick="limparJogo()">RENICIAR JOGADA</button>
+
+    <script src="./script.js"></script>
 </body>
 
-</html> 
+</html>
