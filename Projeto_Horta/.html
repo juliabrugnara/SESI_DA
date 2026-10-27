@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BioCiclo - Plataforma Horta Tech</title>
+  <style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; color: #333; }
+    header { background-color: #1e5e3a; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+    header h1 { margin: 0; font-size: 22px; display: flex; align-items: center; gap: 10px; }
+    
+    .header-logos { display: flex; align-items: center; gap: 15px; }
+    .badge-sesi-senai { background: white; color: #002b49; padding: 4px 10px; border-radius: 4px; font-weight: 800; font-size: 12px; letter-spacing: -0.5px; }
+
+    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 10px; }
+    nav ul li a { color: #d1e7dd; text-decoration: none; font-weight: 500; font-size: 13px; padding: 8px 14px; border-radius: 6px; cursor: pointer; transition: 0.2s; }
+    nav ul li a.active, nav ul li a:hover { background-color: #144027; color: #fff; }
+
+    .container { max-width: 1250px; margin: 25px auto; padding: 0 20px; display: grid; grid-template-columns: 300px 1fr; gap: 20px; }
+    .sidebar { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); height: fit-content; }
+    .sidebar h3 { margin-top: 0; color: #1e5e3a; border-bottom: 2px solid #eef2f0; padding-bottom: 8px; font-size: 16px; }
+
+    .form-group { margin-bottom: 15px; }
+    .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #555; }
+    .form-group select, .form-group input, .form-group textarea { width: 100%; padding: 9px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 13px; }
+
+    .btn-cadastrar { margin-top: 8px; background-color: #1e5e3a; color: white; border: none; width: 100%; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; transition: 0.2s; }
+    .btn-cadastrar:hover { background-color: #144027; }
+
+    .btn-secundario { background-color: #ffffff; border: 1px solid #1e5e3a; color: #1e5e3a; width: 100%; padding: 9px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.2s; margin-top: 8px; }
+    .btn-secundario:hover { background-color: #eef2f0; }
+
+    .btn-atualizar { background-color: #28a745; color: white; border: none; width: 100%; padding: 9px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; margin-top: 10px; transition: 0.2s; }
+    .btn-atualizar:hover { background-color: #218838; }
+
+    .aba-conteudo { display: none; }
+    .aba-conteudo.ativa { display: block; }
+
+    /* Calendário Mensal e Controles */
+    .calendar-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 25px; }
+    .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+    .calendar-header h2 { margin: 0; color: #1e5e3a; font-size: 18px; text-transform: uppercase; font-weight: 800; }
+    .calendar-nav-btn { background: #eef2f0; border: none; color: #1e5e3a; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; }
+    .calendar-nav-btn:hover { background: #1e5e3a; color: white; }
+
+    .grid-calendario { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
+    .dia-semana { font-weight: bold; padding: 6px 0; background: #eef2f0; color: #1e5e3a; border-radius: 4px; font-size: 12px; }
+    .celula-dia { background: #fafafa; border: 1px solid #e0e0e0; min-height: 80px; border-radius: 6px; padding: 4px; font-size: 11px; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; }
+    .celula-dia .numero-dia { font-weight: bold; margin-bottom: 3px; color: #666; }
+    .celula-dia.hoje { border: 2px solid #28a745; background: #f0fff4; }
+    .evento-tag { background: #d1e7dd; color: #0f5132; border-left: 3px solid #198754; padding: 2px 4px; border-radius: 3px; font-size: 9px; text-align: left; width: 90%; margin-top: 2px; font-weight: bold; }
+
+    /* Playlist Estilo YouTube */
+    .yt-playlist-container { background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #e5e5e5; margin-bottom: 25px; }
+    .yt-header { background: linear-gradient(180deg, #333333 0%, #1a1a1a 100%); color: white; padding: 20px; display: flex; gap: 20px; align-items: center; }
+    .yt-banner { width: 140px; height: 80px; background: #28a745; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 35px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+    .yt-info h2 { margin: 0 0 4px 0; font-size: 20px; font-weight: bold; }
+    .yt-info p { margin: 0 0 8px 0; font-size: 12px; color: #aaa; }
+    .yt-stats { font-size: 11px; color: #ccc; margin-bottom: 10px; }
+    .btn-play-all { background: white; color: black; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
+    .btn-play-all:hover { background: #e5e5e5; }
+    
+    .yt-list { padding: 5px 0; }
+    .yt-item { display: flex; gap: 15px; padding: 10px 20px; border-bottom: 1px solid #f0f0f0; align-items: center; }
+    .yt-thumb { width: 100px; height: 56px; background: #1e5e3a; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; position: relative; font-size: 18px; flex-shrink: 0; }
+    .yt-duration { position: absolute; bottom: 3px; right: 3px; background: rgba(0,0,0,0.8); color: white; font-size: 9px; padding: 1px 3px; border-radius: 2px; }
+    .yt-details h4 { margin: 0 0 3px 0; font-size: 13px; color: #0f0f0f; }
+    .yt-details p { margin: 0; font-size: 11px; color: #606060; }
+
+    /* Aba Cultivos Ativos & Pesquisa */
+    .cultivos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+    .card-cultivo-ativo { background: white; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
+    .cultivo-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
+    .cultivo-icone { font-size: 32px; background: #eef2f0; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+    .cultivo-info h3 { margin: 0; color: #1e5e3a; font-size: 16px; font-weight: 700; }
+    .cultivo-info span { font-size: 11px; color: #777; }
+    .cultivo-detalhes p { margin: 4px 0; font-size: 12px; color: #555; }
+    .btn-dar-baixa { background: #d9534f; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 6px; font-size: 12px; transition: 0.2s; }
+    .btn-dar-baixa:hover { background: #c9302c; }
+
+    /* Card de Histórico */
+    .card-historico { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 25px; }
+    .card-header-flex { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eef2f0; padding-bottom: 8px; margin-bottom: 10px; }
+    .card-header-flex h3 { margin: 0; color: #1e5e3a; font-size: 16px; }
+    .item-historico { padding: 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+    .item-historico:last-child { border-bottom: none; }
+
+    /* Caixas Expansíveis (Aba Dados) */
+    .secao-dados-container { display: flex; flex-direction: column; gap: 15px; }
+    .card-expansivel { background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #e0e0e0; }
+    .cabecalho-expansivel { padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; transition: background 0.2s; }
+    .cabecalho-expansivel:hover { background: #f8faf9; }
+    .cabecalho-expansivel h3 { margin: 0; color: #1e5e3a; font-size: 17px; display: flex; align-items: center; gap: 10px; }
+    .seta-icone { font-size: 16px; color: #1e5e3a; transition: transform 0.3s ease; font-weight: bold; }
+    .card-expansivel.aberto .seta-icone { transform: rotate(180deg); }
+    
+    .conteudo-expansivel { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease; padding: 0 24px; background: #fafafa; border-top: 0px solid #eee; }
+    .card-expansivel.aberto .conteudo-expansivel { max-height: 350px; padding: 20px 24px; border-top: 1px solid #eee; }
+    
+    .grid-sensores { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
+    .sensor-box { background: white; padding: 15px; border-radius: 8px; border: 1px solid #e5e5e5; text-align: center; }
+    .sensor-box span { font-size: 12px; color: #666; display: block; }
+    .sensor-box strong { font-size: 22px; color: #1e5e3a; margin-top: 5px; display: block; }
+
+    /* Modal Overlay & Box */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 100; }
+    .modal-content { background: white; padding: 25px; border-radius: 12px; width: 450px; max-width: 90%; }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
+    .modal-header h3 { margin: 0; color: #1e5e3a; }
+    .btn-fechar { background: none; border: none; font-size: 20px; cursor: pointer; color: #888; }
+    .card-modulo { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>🌱 BioCiclo <span style="font-size: 11px; background: #28a745; padding: 3px 8px; border-radius: 10px;">Horta Tech</span></h1>
+    <div class="header-logos">
+      <span class="badge-sesi-senai">SESI SENAI</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a class="nav-aba active" onclick="trocarAba('calendario', this)">Calendário</a></li>
+        <li><a class="nav-aba" onclick="trocarAba('cultivos', this)">Cultivos Ativos</a></li>
+        <li><a class="nav-aba" onclick="trocarAba('pesquisa', this)">Pesquisa de Espécies</a></li>
+        <li><a class="nav-aba" onclick="trocarAba('dados', this)">Dados</a></li>
+        <li><a class="nav-aba" onclick="trocarAba('videos', this)">Vídeos Educativos</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h3>Agendamento do Cultivo</h3>
+
+      <div class="form-group">
+        <label>Espécie de Hortaliça</label>
+        <select id="selectEspecie" onchange="atualizarInterface()"></select>
+      </div>
+
+      <div class="form-group">
+        <label>Modo de Programação</label>
+        <select id="selectModo" onchange="atualizarInterface()">
+          <option value="plantio">Programar por Data de Plantio</option>
+          <option value="colheita">Programar por Data de Colheita</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label id="labelData">Data do Plantio</label>
+        <input type="date" id="inputData" onchange="atualizarInterface()">
+      </div>
+
+      <button class="btn-cadastrar" onclick="iniciarCultivoOficial()">🚀 Confirmar & Registrar Plantio</button>
+    </aside>
+
+    <main>
+      <!-- ABA 1: CALENDÁRIO & PLAYLIST -->
+      <div id="aba-calendario" class="aba-conteudo ativa">
+        <div class="calendar-card">
+          <div class="calendar-header">
+            <button class="calendar-nav-btn" onclick="mudarMes(-1)">◄ Anterior</button>
+            <h2 id="tituloMes">--</h2>
+            <div>
+              <button class="calendar-nav-btn" onclick="voltarMesAtual()">Mês Atual</button>
+              <button class="calendar-nav-btn" onclick="mudarMes(1)">Próximo ►</button>
+            </div>
+          </div>
+
+          <div class="grid-calendario">
+            <div class="dia-semana">DOM</div>
+            <div class="dia-semana">SEG</div>
+            <div class="dia-semana">TER</div>
+            <div class="dia-semana">QUA</div>
+            <div class="dia-semana">QUI</div>
+            <div class="dia-semana">SEX</div>
+            <div class="dia-semana">SÁB</div>
+          </div>
+          <div class="grid-calendario" id="diasContainer" style="margin-top: 6px;"></div>
+        </div>
+
+        <!-- PLAYLIST ESTILO YOUTUBE -->
+        <div class="yt-playlist-container">
+          <div class="yt-header">
+            <div class="yt-banner" id="ytBanner">🌱</div>
+            <div class="yt-info">
+              <h2 id="ytTitulo">HORTA DO ZERO</h2>
+              <p>por BioCiclo • Projetos 2º D (T.I.), 2º A (Automação) e 2º C (Humanas)</p>
+              <div class="yt-stats" id="ytStats">Playlist • 0 vídeos</div>
+              <button class="btn-play-all">▶ Reproduzir tudo</button>
+            </div>
+          </div>
+          <div class="yt-list" id="containerPlaylist"></div>
+        </div>
+
+        <!-- HISTÓRICO DE PROGRAMAÇÕES -->
+        <div class="card-historico" style="margin-top: 0;">
+          <div class="card-header-flex">
+            <h3>📜 Histórico de Agendamentos Realizados</h3>
+            <button class="calendar-nav-btn" onclick="limparHistorico()" style="color: #d9534f; font-size: 11px;">🗑️ Limpar Histórico</button>
+          </div>
+          <div id="containerHistorico"></div>
+        </div>
+      </div>
+
+      <!-- ABA 2: CULTIVOS ATIVOS -->
+      <div id="aba-cultivos" class="aba-conteudo">
+        <div class="card-modulo" style="margin-bottom: 20px;">
+          <h2>🧺 Acompanhamento dos Cultivos Plantados</h2>
+          <p style="font-size: 13px; color: #666;">Gerencie os canteiros, acompanhe o progresso do ciclo e registre os ajustes de manejo.</p>
+        </div>
+        
+        <div id="listaCultivosAtivos" class="cultivos-grid"></div>
+
+        <!-- HISTÓRICO DE BAIXAS -->
+        <div class="card-historico">
+          <div class="card-header-flex">
+            <h3>📜 Histórico de Cultivos Finalizados (Baixas)</h3>
+            <button class="calendar-nav-btn" onclick="limparHistoricoBaixas()" style="color: #d9534f; font-size: 11px;">🗑️ Limpar Baixas</button>
+          </div>
+          <div id="containerHistoricoBaixas"></div>
+        </div>
+      </div>
+
+      <!-- ABA 3: PESQUISA DE ESPÉCIES -->
+      <div id="aba-pesquisa" class="aba-conteudo">
+        <div class="card-modulo" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+          <div>
+            <h2>📚 Pesquisa de Espécies & Necessidades</h2>
+            <p style="font-size: 13px; color: #666; margin: 4px 0 0 0;">Informações agronômicas e científicas de cada cultivar. Cadastre novas espécies ou pesquisas.</p>
+          </div>
+          <div style="display: flex; gap: 10px;">
+            <button class="btn-cadastrar" onclick="abrirModalNovaEspecie()" style="width: auto; padding: 9px 15px; margin-top: 0;">+ Cadastrar Nova Hortaliça</button>
+            <button class="btn-secundario" onclick="abrirModalPesquisa()" style="width: auto; padding: 9px 15px; margin-top: 0;">+ Cadastrar / Editar Pesquisa</button>
+          </div>
+        </div>
+        <div id="listaPesquisas" class="cultivos-grid"></div>
+      </div>
+
+      <!-- ABA 4: DADOS (COM CAIXAS EXPANSÍVEIS) -->
+      <div id="aba-dados" class="aba-conteudo">
+        <div class="secao-dados-container">
+          <div class="card-expansivel">
+            <div class="cabecalho-expansivel" onclick="toggleCaixa(this)">
+              <h3>🌦️ Estação Meteorológica</h3>
+              <span class="seta-icone">▼</span>
+            </div>
+            <div class="conteudo-expansivel">
+              <p style="font-size: 13px; color: #666; margin-top: 0;">Dados lidos em tempo real pelos sensores da horta:</p>
+              <div class="grid-sensores">
+                <div class="sensor-box"><span>Temperatura do Ar</span><strong>24.5 °C</strong></div>
+                <div class="sensor-box"><span>Umidade do Ar</span><strong>68 %</strong></div>
+                <div class="sensor-box"><span>Umidade do Solo</span><strong>42 %</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-expansivel">
+            <div class="cabecalho-expansivel" onclick="toggleCaixa(this)">
+              <h3>📹 Câmeras Ao Vivo</h3>
+              <span class="seta-icone">▼</span>
+            </div>
+            <div class="conteudo-expansivel">
+              <p style="font-size: 13px; color: #666; margin-top: 0;">Transmissão ao vivo dos canteiros para acompanhamento do crescimento:</p>
+              <div style="background: #222; color: white; height: 160px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px;">
+                🔴 Transmissão Ao Vivo (Canteiro Principal)
+              </div>
+            </div>
+          </div>
+
+          <div class="card-expansivel">
+            <div class="cabecalho-expansivel" onclick="toggleCaixa(this)">
+              <h3>💧 Irrigação & Climatização</h3>
+              <span class="seta-icone">▼</span>
+            </div>
+            <div class="conteudo-expansivel">
+              <p style="font-size: 13px; color: #666; margin-top: 0;">Status de acionamento dos atuadores e bombas:</p>
+              <div class="grid-sensores">
+                <div class="sensor-box"><span>Bomba de Irrigação</span><strong style="color: #28a745;">DESLIGADA</strong></div>
+                <div class="sensor-box"><span>Solenóide Setor A</span><strong style="color: #28a745;">FECHADA</strong></div>
+                <div class="sensor-box"><span>Ventilação / Exaustor</span><strong style="color: #d9534f;">LIGADO</strong></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-expansivel">
+            <div class="cabecalho-expansivel" onclick="toggleCaixa(this)">
+              <h3>🚰 Cisterna</h3>
+              <span class="seta-icone">▼</span>
+            </div>
+            <div class="conteudo-expansivel">
+              <p style="font-size: 13px; color: #666; margin-top: 0;">Monitoramento de captação e reserva de água de reuso:</p>
+              <div class="grid-sensores">
+                <div class="sensor-box"><span>Nível do Reservatório</span><strong>85 %</strong></div>
+                <div class="sensor-box"><span>Volume Estimado</span><strong>425 Litros</strong></div>
+                <div class="sensor-box"><span>Qualidade da Água</span><strong>Adequada</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ABA 5: VÍDEOS EDUCATIVOS -->
+      <div id="aba-videos" class="aba-conteudo">
+        <div class="card-modulo">
+          <h2>🎥 Vídeos Educativos</h2>
+          <p>Biblioteca completa de conteúdos em vídeo das turmas do 2º D, 2º A e 2º C.</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- MODAL 1: CADASTRAR NOVA HORTALIÇA -->
+  <div class="modal-overlay" id="modalNovaEspecie">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Cadastrar Nova Hortaliça</h3>
+        <button class="btn-fechar" onclick="fecharModal('modalNovaEspecie')">&times;</button>
+      </div>
+      <form onsubmit="salvarNovaEspecie(event)">
+        <div class="form-group">
+          <label>Nome da Espécie</label>
+          <input type="text" id="novoNome" placeholder="Ex: Cenoura" required>
+        </div>
+        <div class="form-group">
+          <label>Ícone (Emoji)</label>
+          <input type="text" id="novoIcone" placeholder="Ex: 🥕" value="🌱" required>
+        </div>
+        <div class="form-group">
+          <label>Ciclo Total (dias)</label>
+          <input type="number" id="novoCiclo" placeholder="Ex: 80" required>
+        </div>
+        <button type="submit" class="btn-cadastrar">Salvar Nova Hortaliça</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL 2: CADASTRAR / EDITAR PESQUISA CIENTÍFICA -->
+  <div class="modal-overlay" id="modalPesquisa">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Cadastrar / Editar Pesquisa Científica</h3>
+        <button class="btn-fechar" onclick="fecharModal('modalPesquisa')">&times;</button>
+      </div>
+      <form onsubmit="salvarPesquisa(event)">
+        <div class="form-group">
+          <label>Selecione a Hortaliça</label>
+          <select id="selectEspeciePesquisa" required></select>
+        </div>
+        <div class="form-group">
+          <label>Informações Científicas (Solo, Irrigação e Manejo)</label>
+          <textarea id="textoPesquisa" placeholder="Ex: Solo rico em matéria orgânica, pH entre 6.0 e 6.8..." rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn-cadastrar">Salvar Informações da Pesquisa</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    let mesNavegacao = new Date().getMonth();
+    let anoNavegacao = new Date().getFullYear();
+    let historicoAgendamentos = [];
+    let historicoBaixas = [];
+
+    const fasesProgresso = {
+      "Germinação": 15,
+      "Crescimento / Manejo": 45,
+      "Floração / Frutificação": 75,
+      "Pronta para Colheita": 100
+    };
+
+    let cultivosAtivos = [
+      {
+        id: 1,
+        nome: "Tomate",
+        icone: "🍅",
+        dataPlantio: "2026-10-01",
+        dataColheita: "2027-01-04",
+        faseAtual: "Crescimento / Manejo",
+        progressoManual: 45,
+        observacao: "Atraso leve de 2 dias no estaqueamento devido à chuva."
+      }
+    ];
+
+    const hortalicas = {
+      tomate: {
+        nome: "Tomate",
+        icone: "🍅",
+        cicloTotal: 95,
+        pesquisaInfo: "Exige solo rico em matéria orgânica, rega regular sem encharcar as folhas e suporte de madeira (estaqueamento) para os galhos.",
+        eventos: [
+          { dia: 0, nome: "Plantio 🍅" },
+          { dia: 10, nome: "Irrigação 💧" },
+          { dia: 20, nome: "Estaqueamento 🪵" },
+          { dia: 35, nome: "Desbrota ✂️" },
+          { dia: 95, nome: "Colheita 🧺" }
+        ],
+        videos: [
+          { ep: "Ep. 01", titulo: "HORTA DO ZERO: Ep. 01 - Preparo do Solo e Plantio Inicial", canal: "Eq. Emily (Tomatrix / 2º D)", tempo: "12:30", icone: "🌱" },
+          { ep: "Ep. 02", titulo: "HORTA DO ZERO: Ep. 02 - Ajuste da Rega Automática", canal: "Eq. Vyctor (Irrigação / 2º D)", tempo: "08:15", icone: "💧" },
+          { ep: "Ep. 03", titulo: "HORTA DO ZERO: Ep. 03 - Dicas de Estaqueamento", canal: "Eq. Meninos (Automação / 2º A)", tempo: "15:40", icone: "🪵" },
+          { ep: "Ep. 04", titulo: "HORTA DO ZERO: Ep. 04 - Poda e Controle de Pragas", canal: "Pesquisa Científica (2º C)", tempo: "10:20", icone: "✂️" }
+        ]
+      },
+      alface: {
+        nome: "Alface",
+        icone: "🥬",
+        cicloTotal: 50,
+        pesquisaInfo: "Necessita de solo leve, rico em nitrogênio e irrigação constante para manter o solo úmido mas drenado.",
+        eventos: [
+          { dia: 0, nome: "Plantio 🥬" },
+          { dia: 15, nome: "Adubação 🧪" },
+          { dia: 30, nome: "Inspeção 🔍" },
+          { dia: 50, nome: "Colheita 🧺" }
+        ],
+        videos: [
+          { ep: "Ep. 01", titulo: "HORTA DO ZERO: Ep. 01 - Semeadura em Canteiros", canal: "Pesquisa Científica (2º C)", tempo: "09:50", icone: "🥬" },
+          { ep: "Ep. 02", titulo: "HORTA DO ZERO: Ep. 02 - Monitoramento do Clima", canal: "Eq. Meninas (Climatização / 2º A)", tempo: "11:05", icone: "🌡️" }
+        ]
+      },
+      chicoria: {
+        nome: "Chicória",
+        icone: "🥗",
+        cicloTotal: 65,
+        pesquisaInfo: "Planta rústica que se adapta bem a vários solos, requer iluminação direta e rega espaçada.",
+        eventos: [
+          { dia: 0, nome: "Plantio 🥗" },
+          { dia: 20, nome: "Rega 💧" },
+          { dia: 45, nome: "Amarração 🧵" },
+          { dia: 65, nome: "Colheita 🧺" }
+        ],
+        videos: [
+          { ep: "Ep. 01", titulo: "HORTA DO ZERO: Ep. 01 - Manejo e Cuidados", canal: "Pesquisa Científica (2º C)", tempo: "07:40", icone: "🥗" }
+        ]
+      }
+    };
+
+    document.getElementById('inputData').valueAsDate = new Date();
+
+    function carregarSelectEspecies() {
+      const select = document.getElementById('selectEspecie');
+      const selectPesquisa = document.getElementById('selectEspeciePesquisa');
+      
+      select.innerHTML = '';
+      selectPesquisa.innerHTML = '';
+
+      for (let chave in hortalicas) {
+        let opt1 = document.createElement('option');
+        opt1.value = chave;
+        opt1.textContent = `${hortalicas[chave].nome} ${hortalicas[chave].icone}`;
+        select.appendChild(opt1);
+
+        let opt2 = document.createElement('option');
+        opt2.value = chave;
+        opt2.textContent = `${hortalicas[chave].nome} ${hortalicas[chave].icone}`;
+        selectPesquisa.appendChild(opt2);
+      }
+    }
+
+    function trocarAba(nomeAba, el) {
+      document.querySelectorAll('.aba-conteudo').forEach(div => div.classList.remove('ativa'));
+      document.querySelectorAll('.nav-aba').forEach(a => a.classList.remove('active'));
+      document.getElementById('aba-' + nomeAba).classList.add('ativa');
+      el.classList.add('active');
+
+      if (nomeAba === 'cultivos') renderizarCultivosAtivos();
+      if (nomeAba === 'pesquisa') renderizarPesquisas();
+    }
+
+    function toggleCaixa(elementoCabecalho) {
+      const card = elementoCabecalho.parentElement;
+      card.classList.toggle('aberto');
+    }
+
+    function mudarMes(delta) {
+      mesNavegacao += delta;
+      if (mesNavegacao > 11) { mesNavegacao = 0; anoNavegacao++; }
+      else if (mesNavegacao < 0) { mesNavegacao = 11; anoNavegacao--; }
+      atualizarInterface();
+    }
+
+    function voltarMesAtual() {
+      mesNavegacao = new Date().getMonth();
+      anoNavegacao = new Date().getFullYear();
+      atualizarInterface();
+    }
+
+    function atualizarInterface() {
+      const chave = document.getElementById('selectEspecie').value;
+      const modo = document.getElementById('selectModo').value;
+      const dataSelecionada = new Date(document.getElementById('inputData').value);
+      const planta = hortalicas[chave];
+
+      if (!planta) return;
+
+      document.getElementById('labelData').textContent = modo === 'plantio' ? 'Data do Plantio' : 'Data Desejada da Colheita';
+
+      let dataPlantioCalculada = new Date(dataSelecionada);
+      if (modo === 'colheita') {
+        dataPlantioCalculada.setDate(dataPlantioCalculada.getDate() - planta.cicloTotal);
+      }
+
+      const containerDias = document.getElementById('diasContainer');
+      containerDias.innerHTML = '';
+
+      const dataRef = new Date(anoNavegacao, mesNavegacao, 1);
+      document.getElementById('tituloMes').textContent = dataRef.toLocaleDateString('pt-PT', { month: 'long', year: 'numeric' });
+
+      const primeiroDiaSemana = dataRef.getDay();
+      const totalDiasMes = new Date(anoNavegacao, mesNavegacao + 1, 0).getDate();
+      const hoje = new Date();
+
+      for (let i = 0; i < primeiroDiaSemana; i++) {
+        const celulaVazia = document.createElement('div');
+        celulaVazia.className = 'celula-dia';
+        celulaVazia.style.opacity = '0.2';
+        containerDias.appendChild(celulaVazia);
+      }
+
+      for (let dia = 1; dia <= totalDiasMes; dia++) {
+        const celula = document.createElement('div');
+        celula.className = 'celula-dia';
+
+        const dataAtualGrid = new Date(anoNavegacao, mesNavegacao, dia);
+
+        if (hoje.toDateString() === dataAtualGrid.toDateString()) {
+          celula.classList.add('hoje');
+        }
+
+        celula.innerHTML = `<span class="numero-dia">${dia}</span>`;
+
+        planta.eventos.forEach(ev => {
+          let dataEv = new Date(dataPlantioCalculada);
+          dataEv.setDate(dataEv.getDate() + ev.dia + 1);
+
+          if (dataEv.toDateString() === dataAtualGrid.toDateString()) {
+            celula.innerHTML += `<div class="evento-tag">${ev.nome}</div>`;
+          }
+        });
+
+        containerDias.appendChild(celula);
+      }
+
+      document.getElementById('ytBanner').textContent = planta.icone;
+      document.getElementById('ytTitulo').textContent = `HORTA DO ZERO: ${planta.nome.toUpperCase()}`;
+      document.getElementById('ytStats').textContent = `Playlist • ${planta.videos.length} vídeos`;
+
+      const containerPlaylist = document.getElementById('containerPlaylist');
+      containerPlaylist.innerHTML = '';
+
+      planta.videos.forEach(v => {
+        const itemHTML = `
+          <div class="yt-item">
+            <div class="yt-thumb">
+              ${v.icone}
+              <span class="yt-duration">${v.tempo}</span>
+            </div>
+            <div class="yt-details">
+              <h4>${v.titulo}</h4>
+              <p>${v.canal}</p>
+            </div>
+          </div>
+        `;
+        containerPlaylist.innerHTML += itemHTML;
+      });
+
+      adicionarAoHistorico(planta.nome, dataPlantioCalculada, modo);
+    }
+
+    function iniciarCultivoOficial() {
+      const chave = document.getElementById('selectEspecie').value;
+      const planta = hortalicas[chave];
+      const dataSelecionada = new Date(document.getElementById('inputData').value);
+      
+      let dataPlantio = new Date(dataSelecionada);
+      let dataColheita = new Date(dataPlantio);
+      dataColheita.setDate(dataColheita.getDate() + planta.cicloTotal);
+
+      const novoCultivo = {
+        id: Date.now(),
+        nome: planta.nome,
+        icone: planta.icone,
+        dataPlantio: dataPlantio.toISOString().split('T')[0],
+        dataColheita: dataColheita.toISOString().split('T')[0],
+        faseAtual: "Germinação",
+        progressoManual: 15,
+        observacao: "Nenhum imprevisto registrado."
+      };
+
+      cultivosAtivos.push(novoCultivo);
+      renderizarCultivosAtivos();
+      alert(`✅ ${planta.nome} confirmado e registrado nos Cultivos Ativos!`);
+    }
+
+    function renderizarCultivosAtivos() {
+      const container = document.getElementById('listaCultivosAtivos');
+      container.innerHTML = '';
+
+      if (cultivosAtivos.length === 0) {
+        container.innerHTML = `<p style="grid-column: 1/-1; color: #777; text-align: center;">Nenhum cultivo ativo no momento. Confirme um plantio no painel lateral!</p>`;
+      } else {
+        cultivosAtivos.forEach(c => {
+          const card = document.createElement('div');
+          card.className = 'card-cultivo-ativo';
+          card.innerHTML = `
+            <div>
+              <div class="cultivo-header">
+                <div class="cultivo-icone">${c.icone}</div>
+                <div class="cultivo-info">
+                  <h3>${c.nome}</h3>
+                  <span>Plantado em: ${c.dataPlantio}</span>
+                </div>
+              </div>
+              <div class="cultivo-detalhes">
+                <p>📅 Previsão Colheita: <strong>${c.dataColheita}</strong></p>
+                
+                <div style="margin: 10px 0;">
+                  <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px;">
+                    <span>Progresso do Ciclo:</span>
+                    <strong id="progressoTexto-${c.id}">${c.progressoManual}%</strong>
+                  </div>
+                  <div style="background: #e0e0e0; border-radius: 4px; height: 8px; width: 100%; overflow: hidden;">
+                    <div id="progressoBarra-${c.id}" style="background: #28a745; width: ${c.progressoManual}%; height: 100%; transition: width 0.3s ease;"></div>
+                  </div>
+                </div>
+
+                <div class="form-group" style="margin-top: 8px;">
+                  <label>Fase do Desenvolvimento:</label>
+                  <select id="selectFase-${c.id}" onchange="atualizarFaseEProgresso(${c.id}, this.value)">
+                    <option value="Germinação" ${c.faseAtual === 'Germinação' ? 'selected' : ''}>🌱 Germinação (15%)</option>
+                    <option value="Crescimento / Manejo" ${c.faseAtual === 'Crescimento / Manejo' ? 'selected' : ''}>🌿 Crescimento / Manejo (45%)</option>
+                    <option value="Floração / Frutificação" ${c.faseAtual === 'Floração / Frutificação' ? 'selected' : ''}>🌼 Floração / Frutificação (75%)</option>
+                    <option value="Pronta para Colheita" ${c.faseAtual === 'Pronta para Colheita' ? 'selected' : ''}>🧺 Pronta para Colheita (100%)</option>
+                  </select>
+                </div>
+
+                <div class="form-group" style="margin-top: 6px;">
+                  <label>📝 Registrar Alteração / Manejo (ex: Atraso):</label>
+                  <input type="text" id="obsInput-${c.id}" value="${c.observacao}" placeholder="Ex: Atraso no estaqueamento...">
+                </div>
+              </div>
+            </div>
+            <div>
+              <button class="btn-atualizar" onclick="salvarAlteracoesCultivo(${c.id})">💾 Atualizar Cultivo</button>
+              <button class="btn-dar-baixa" onclick="darBaixaCultivo(${c.id})">✅ Dar Baixa (Finalizar)</button>
+            </div>
+          `;
+          container.appendChild(card);
+        });
+      }
+
+      renderizarHistoricoBaixas();
+    }
+
+    function atualizarFaseEProgresso(id, novaFase) {
+      const cultivo = cultivosAtivos.find(item => item.id === id);
+      if (cultivo) {
+        cultivo.faseAtual = novaFase;
+        cultivo.progressoManual = fasesProgresso[novaFase] || 0;
+        
+        const barra = document.getElementById(`progressoBarra-${id}`);
+        const texto = document.getElementById(`progressoTexto-${id}`);
+        
+        if (barra && texto) {
+          barra.style.width = `${cultivo.progressoManual}%`;
+          texto.textContent = `${cultivo.progressoManual}%`;
+        }
+      }
+    }
+
+    function salvarAlteracoesCultivo(id) {
+      const cultivo = cultivosAtivos.find(item => item.id === id);
+      if (cultivo) {
+        const obsInput = document.getElementById(`obsInput-${id}`);
+        if (obsInput) {
+          cultivo.observacao = obsInput.value;
+        }
+        alert(`✅ Cultivo de "${cultivo.nome}" atualizado com sucesso!`);
+      }
+    }
+
+    function darBaixaCultivo(id) {
+      const cultivo = cultivosAtivos.find(item => item.id === id);
+      if (cultivo && confirm(`Tem certeza que deseja dar baixa e finalizar o cultivo de ${cultivo.nome}?`)) {
+        const obsInput = document.getElementById(`obsInput-${id}`);
+        if (obsInput) cultivo.observacao = obsInput.value;
+
+        const dataAtualStr = new Date().toLocaleDateString('pt-BR');
+        
+        historicoBaixas.unshift({
+          id: cultivo.id,
+          nome: cultivo.nome,
+          icone: cultivo.icone,
+          dataPlantio: cultivo.dataPlantio,
+          dataColheita: cultivo.dataColheita,
+          dataBaixa: dataAtualStr,
+          faseFinal: cultivo.faseAtual,
+          progressoManual: cultivo.progressoManual,
+          observacao: cultivo.observacao
+        });
+
+        cultivosAtivos = cultivosAtivos.filter(item => item.id !== id);
+        renderizarCultivosAtivos();
+      }
+    }
+
+    function desfazerBaixa(id) {
+      const itemBaixa = historicoBaixas.find(b => b.id === id);
+      if (itemBaixa) {
+        cultivosAtivos.push({
+          id: itemBaixa.id,
+          nome: itemBaixa.nome,
+          icone: itemBaixa.icone,
+          dataPlantio: itemBaixa.dataPlantio,
+          dataColheita: itemBaixa.dataColheita,
+          faseAtual: itemBaixa.faseFinal,
+          progressoManual: itemBaixa.progressoManual,
+          observacao: itemBaixa.observacao
+        });
+
+        historicoBaixas = historicoBaixas.filter(b => b.id !== id);
+        renderizarCultivosAtivos();
+        alert(`↩️ Cultivo de "${itemBaixa.nome}" restaurado com sucesso!`);
+      }
+    }
+
+    function renderizarHistoricoBaixas() {
+      const container = document.getElementById('containerHistoricoBaixas');
+      container.innerHTML = '';
+
+      if (historicoBaixas.length === 0) {
+        container.innerHTML = '<p style="font-size: 12px; color: #777; margin: 5px 0;">Nenhum cultivo finalizado até o momento.</p>';
+        return;
+      }
+
+      historicoBaixas.forEach(b => {
+        container.innerHTML += `
+          <div class="item-historico">
+            <div>
+              <span>${b.icone} <strong>${b.nome}</strong> — Plantado em: ${b.dataPlantio} | Baixa em: <strong>${b.dataBaixa}</strong> (${b.faseFinal})</span>
+              <br><span style="font-size: 11px; color: #555;">📝 ${b.observacao}</span>
+            </div>
+            <button class="calendar-nav-btn" onclick="desfazerBaixa(${b.id})" style="background-color: #e2e8f0; color: #1e5e3a; font-weight: bold; padding: 5px 10px; font-size: 11px;">↩️ Desfazer</button>
+          </div>
+        `;
+      });
+    }
+
+    function limparHistoricoBaixas() {
+      historicoBaixas = [];
+      renderizarHistoricoBaixas();
+    }
+
+    function renderizarPesquisas() {
+      const container = document.getElementById('listaPesquisas');
+      container.innerHTML = '';
+
+      for (let chave in hortalicas) {
+        const item = hortalicas[chave];
+        const card = document.createElement('div');
+        card.className = 'card-cultivo-ativo';
+        card.innerHTML = `
+          <div>
+            <div class="cultivo-header">
+              <div class="cultivo-icone">${item.icone}</div>
+              <div class="cultivo-info">
+                <h3>${item.nome}</h3>
+                <span>Ciclo Total: ${item.cicloTotal} dias</span>
+              </div>
+            </div>
+            <div class="cultivo-detalhes">
+              <p>📖 <strong>Pesquisa Científica & Rega:</strong></p>
+              <p style="font-size: 11px; color: #666; line-height: 1.4;">${item.pesquisaInfo || "Nenhuma pesquisa cadastrada."}</p>
+            </div>
+          </div>
+          <button class="btn-dar-baixa" style="background-color: #d9534f; margin-top: 10px;" onclick="excluirPesquisa('${chave}')">🗑️ Excluir Pesquisa</button>
+        `;
+        container.appendChild(card);
+      }
+    }
+
+    function excluirPesquisa(chave) {
+      if (confirm(`Tem certeza que deseja excluir a pesquisa da espécie ${hortalicas[chave].nome}?`)) {
+        delete hortalicas[chave];
+        carregarSelectEspecies();
+        atualizarInterface();
+        renderizarPesquisas();
+      }
+    }
+
+    function adicionarAoHistorico(nomePlanta, dataPlantio, modo) {
+      const dataStr = dataPlantio.toLocaleDateString('pt-BR');
+      const itemTexto = `${nomePlanta} - Agendado via ${modo.toUpperCase()} (Início em ${dataStr})`;
+
+      if (!historicoAgendamentos.includes(itemTexto)) {
+        historicoAgendamentos.unshift(itemTexto);
+        if (historicoAgendamentos.length > 5) historicoAgendamentos.pop();
+      }
+
+      const containerHist = document.getElementById('containerHistorico');
+      containerHist.innerHTML = '';
+      historicoAgendamentos.forEach(item => {
+        containerHist.innerHTML += `<div class="item-historico"><span>🌱 ${item}</span> <span>✅ Ativo</span></div>`;
+      });
+    }
+
+    function limparHistorico() {
+      historicoAgendamentos = [];
+      const containerHist = document.getElementById('containerHistorico');
+      containerHist.innerHTML = '<p style="font-size: 12px; color: #777; margin: 5px 0;">Histórico limpo.</p>';
+    }
+
+    function abrirModalNovaEspecie() { document.getElementById('modalNovaEspecie').style.display = 'flex'; }
+    function abrirModalPesquisa() { document.getElementById('modalPesquisa').style.display = 'flex'; }
+    function fecharModal(idModal) { document.getElementById(idModal).style.display = 'none'; }
+
+    function salvarNovaEspecie(e) {
+      e.preventDefault();
+      const nome = document.getElementById('novoNome').value;
+      const chave = nome.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+      const icone = document.getElementById('novoIcone').value;
+      const ciclo = parseInt(document.getElementById('novoCiclo').value);
+
+      hortalicas[chave] = {
+        nome: nome,
+        icone: icone,
+        cicloTotal: ciclo,
+        pesquisaInfo: "Pesquisa em andamento...",
+        eventos: [
+          { dia: 0, nome: `Plantio ${icone}` },
+          { dia: Math.round(ciclo / 2), nome: "Manejo 💧" },
+          { dia: ciclo, nome: "Colheita 🧺" }
+        ],
+        videos: [
+          { ep: "Ep. 01", titulo: `HORTA DO ZERO: Ep. 01 - Cultivo de ${nome}`, canal: "Pesquisa Científica (2º C)", tempo: "08:00", icone: icone }
+        ]
+      };
+
+      carregarSelectEspecies();
+      document.getElementById('selectEspecie').value = chave;
+      atualizarInterface();
+      renderizarPesquisas();
+      fecharModal('modalNovaEspecie');
+      document.getElementById('novoNome').value = '';
+      alert(`✅ Nova hortaliça "${nome}" cadastrada com sucesso!`);
+    }
+
+    function salvarPesquisa(e) {
+      e.preventDefault();
+      const chave = document.getElementById('selectEspeciePesquisa').value;
+      const texto = document.getElementById('textoPesquisa').value;
+
+      if (hortalicas[chave]) {
+        hortalicas[chave].pesquisaInfo = texto;
+        renderizarPesquisas();
+        fecharModal('modalPesquisa');
+        document.getElementById('textoPesquisa').value = '';
+        alert(`✅ Pesquisa de "${hortalicas[chave].nome}" atualizada com sucesso!`);
+      }
+    }
+
+    carregarSelectEspecies();
+    atualizarInterface();
+  </script>
+</body>
+</html>
