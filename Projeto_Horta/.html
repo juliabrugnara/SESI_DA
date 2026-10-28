@@ -3,133 +3,642 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BioCiclo - Plataforma Horta Tech</title>
+  <title>BioCiclo - Plataforma Horta Tech SESI SENAI</title>
   <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; margin: 0; padding: 0; color: #333; }
-    header { background-color: #1e5e3a; color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
-    header h1 { margin: 0; font-size: 22px; display: flex; align-items: center; gap: 10px; }
+    body { 
+      font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif; 
+      background-color: #f1f5f3; 
+      margin: 0; 
+      padding: 0; 
+      color: #1e293b; 
+    }
+    
+    /* Header Principal */
+    header { 
+      background-color: #144027; 
+      color: white; 
+      padding: 18px 40px; 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      box-shadow: 0 4px 20px rgba(0,0,0,0.12);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    header h1 { 
+      margin: 0; 
+      font-size: 24px; 
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      font-weight: 800; 
+      letter-spacing: -0.5px;
+    }
+
+    header h1 svg {
+      filter: drop-shadow(0 0 6px rgba(52, 211, 153, 0.4));
+    }
+
+    .badge-verde {
+      font-size: 11px; 
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
+      padding: 4px 10px; 
+      border-radius: 20px; 
+      font-weight: 700;
+      letter-spacing: 0.3px;
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+    }
     
     .header-logos { display: flex; align-items: center; gap: 15px; }
-    .badge-sesi-senai { background: white; color: #002b49; padding: 4px 10px; border-radius: 4px; font-weight: 800; font-size: 12px; letter-spacing: -0.5px; }
+    
+    .badge-sesi-senai { 
+      background: #ffffff; 
+      color: #002b49; 
+      padding: 6px 14px; 
+      border-radius: 6px; 
+      font-weight: 800; 
+      font-size: 13px; 
+      letter-spacing: -0.3px; 
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15); 
+    }
 
-    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 10px; }
-    nav ul li a { color: #d1e7dd; text-decoration: none; font-weight: 500; font-size: 13px; padding: 8px 14px; border-radius: 6px; cursor: pointer; transition: 0.2s; }
-    nav ul li a.active, nav ul li a:hover { background-color: #144027; color: #fff; }
+    nav ul { list-style: none; margin: 0; padding: 0; display: flex; gap: 8px; }
+    
+    nav ul li a { 
+      color: #e2e8f0; 
+      text-decoration: none; 
+      font-weight: 600; 
+      font-size: 13px; 
+      padding: 10px 18px; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      transition: all 0.25s ease; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 6px; 
+    }
 
-    .container { max-width: 1250px; margin: 25px auto; padding: 0 20px; display: grid; grid-template-columns: 300px 1fr; gap: 20px; }
-    .sidebar { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); height: fit-content; }
-    .sidebar h3 { margin-top: 0; color: #1e5e3a; border-bottom: 2px solid #eef2f0; padding-bottom: 8px; font-size: 16px; }
+    nav ul li a.active, nav ul li a:hover { 
+      background-color: rgba(255, 255, 255, 0.15); 
+      color: #ffffff; 
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.2);
+    }
 
-    .form-group { margin-bottom: 15px; }
-    .form-group label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #555; }
-    .form-group select, .form-group input, .form-group textarea { width: 100%; padding: 9px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 13px; }
+    /* Layouts Expandidos para Usar Melhor a Tela */
+    .container { max-width: 1400px; margin: 30px auto; padding: 0 24px; display: grid; grid-template-columns: 320px 1fr; gap: 28px; }
+    .container-full { max-width: 1400px; margin: 30px auto; padding: 0 24px; }
 
-    .btn-cadastrar { margin-top: 8px; background-color: #1e5e3a; color: white; border: none; width: 100%; padding: 10px; border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 13px; transition: 0.2s; }
-    .btn-cadastrar:hover { background-color: #144027; }
+    .sidebar { 
+      background: white; 
+      padding: 24px; 
+      border-radius: 16px; 
+      box-shadow: 0 4px 20px rgba(0,0,0,0.04); 
+      height: fit-content; 
+      border: 1px solid #e2e8f0; 
+    }
 
-    .btn-secundario { background-color: #ffffff; border: 1px solid #1e5e3a; color: #1e5e3a; width: 100%; padding: 9px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 13px; transition: 0.2s; margin-top: 8px; }
-    .btn-secundario:hover { background-color: #eef2f0; }
+    .sidebar h3 { 
+      margin-top: 0; 
+      color: #16472b; 
+      border-bottom: 2px solid #f1f5f9; 
+      padding-bottom: 12px; 
+      font-size: 17px; 
+      font-weight: 700; 
+    }
 
-    .btn-atualizar { background-color: #28a745; color: white; border: none; width: 100%; padding: 9px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 12px; margin-top: 10px; transition: 0.2s; }
-    .btn-atualizar:hover { background-color: #218838; }
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 12px; font-weight: 700; margin-bottom: 6px; color: #475569; text-transform: uppercase; letter-spacing: 0.3px; }
+    
+    .form-group select, .form-group input, .form-group textarea { 
+      width: 100%; 
+      padding: 12px; 
+      border: 1px solid #cbd5e1; 
+      border-radius: 8px; 
+      box-sizing: border-box; 
+      font-size: 13px; 
+      font-family: inherit; 
+      transition: border-color 0.2s, box-shadow 0.2s;
+      background: #f8fafc;
+    }
+
+    .form-group select:focus, .form-group input:focus {
+      outline: none;
+      border-color: #10b981;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+    }
+
+    .btn-cadastrar { 
+      margin-top: 10px; 
+      background: linear-gradient(135deg, #16472b 0%, #0f3820 100%); 
+      color: white; 
+      border: none; 
+      width: 100%; 
+      padding: 13px; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-weight: 700; 
+      font-size: 14px; 
+      transition: all 0.2s ease; 
+      display: inline-flex; 
+      align-items: center; 
+      justify-content: center; 
+      gap: 8px; 
+      box-shadow: 0 4px 12px rgba(22, 71, 43, 0.25);
+    }
+
+    .btn-cadastrar:hover { 
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(22, 71, 43, 0.35);
+    }
+
+    .btn-secundario { 
+      background-color: #ffffff; 
+      border: 1px solid #16472b; 
+      color: #16472b; 
+      width: 100%; 
+      padding: 10px; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-weight: 700; 
+      font-size: 13px; 
+      transition: 0.2s; 
+      margin-top: 8px; 
+    }
+
+    .btn-secundario:hover { background-color: #f0fdf4; }
+
+    .btn-atualizar { 
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%); 
+      color: white; 
+      border: none; 
+      width: 100%; 
+      padding: 11px; 
+      border-radius: 8px; 
+      cursor: pointer; 
+      font-weight: 700; 
+      font-size: 13px; 
+      margin-top: 10px; 
+      transition: 0.2s; 
+      box-shadow: 0 2px 8px rgba(16, 185, 129, 0.2);
+    }
+
+    .btn-atualizar:hover { opacity: 0.95; transform: translateY(-1px); }
 
     .aba-conteudo { display: none; }
     .aba-conteudo.ativa { display: block; }
 
-    /* Calendário Mensal e Controles */
-    .calendar-card { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-bottom: 25px; }
-    .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-    .calendar-header h2 { margin: 0; color: #1e5e3a; font-size: 18px; text-transform: uppercase; font-weight: 800; }
-    .calendar-nav-btn { background: #eef2f0; border: none; color: #1e5e3a; padding: 6px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; }
-    .calendar-nav-btn:hover { background: #1e5e3a; color: white; }
+    /* Hero Banner Imponente */
+    .hero-banner { 
+      background: linear-gradient(135deg, #0b2e1a 0%, #16472b 55%, #113822 100%); 
+      color: white; 
+      padding: 50px 55px; 
+      border-radius: 20px; 
+      margin-bottom: 35px; 
+      box-shadow: 0 12px 35px rgba(11, 46, 26, 0.22); 
+      position: relative; 
+      overflow: hidden; 
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 40px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
 
-    .grid-calendario { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; text-align: center; }
-    .dia-semana { font-weight: bold; padding: 6px 0; background: #eef2f0; color: #1e5e3a; border-radius: 4px; font-size: 12px; }
-    .celula-dia { background: #fafafa; border: 1px solid #e0e0e0; min-height: 80px; border-radius: 6px; padding: 4px; font-size: 11px; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start; }
-    .celula-dia .numero-dia { font-weight: bold; margin-bottom: 3px; color: #666; }
-    .celula-dia.hoje { border: 2px solid #28a745; background: #f0fff4; }
-    .evento-tag { background: #d1e7dd; color: #0f5132; border-left: 3px solid #198754; padding: 2px 4px; border-radius: 3px; font-size: 9px; text-align: left; width: 90%; margin-top: 2px; font-weight: bold; }
+    .hero-banner::before {
+      content: "";
+      position: absolute;
+      top: -50%; right: -20%; width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(16, 185, 129, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
 
-    /* Playlist Estilo YouTube */
-    .yt-playlist-container { background: #ffffff; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #e5e5e5; margin-bottom: 25px; }
-    .yt-header { background: linear-gradient(180deg, #333333 0%, #1a1a1a 100%); color: white; padding: 20px; display: flex; gap: 20px; align-items: center; }
-    .yt-banner { width: 140px; height: 80px; background: #28a745; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 35px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
-    .yt-info h2 { margin: 0 0 4px 0; font-size: 20px; font-weight: bold; }
-    .yt-info p { margin: 0 0 8px 0; font-size: 12px; color: #aaa; }
-    .yt-stats { font-size: 11px; color: #ccc; margin-bottom: 10px; }
-    .btn-play-all { background: white; color: black; border: none; padding: 8px 16px; border-radius: 20px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
-    .btn-play-all:hover { background: #e5e5e5; }
+    .hero-text { flex: 1; z-index: 2; }
     
-    .yt-list { padding: 5px 0; }
-    .yt-item { display: flex; gap: 15px; padding: 10px 20px; border-bottom: 1px solid #f0f0f0; align-items: center; }
-    .yt-thumb { width: 100px; height: 56px; background: #1e5e3a; border-radius: 6px; display: flex; align-items: center; justify-content: center; color: white; position: relative; font-size: 18px; flex-shrink: 0; }
-    .yt-duration { position: absolute; bottom: 3px; right: 3px; background: rgba(0,0,0,0.8); color: white; font-size: 9px; padding: 1px 3px; border-radius: 2px; }
-    .yt-details h4 { margin: 0 0 3px 0; font-size: 13px; color: #0f0f0f; }
-    .yt-details p { margin: 0; font-size: 11px; color: #606060; }
+    .hero-banner h2 { 
+      margin: 0 0 14px 0; 
+      font-size: 38px; 
+      font-weight: 800; 
+      letter-spacing: -0.8px; 
+      line-height: 1.15; 
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .hero-banner p { 
+      margin: 0 0 26px 0; 
+      font-size: 16px; 
+      color: #e2e8f0; 
+      max-width: 820px; 
+      line-height: 1.65; 
+    }
+    
+    .hero-badges { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 24px; }
+    
+    .hero-tag { 
+      background: rgba(255, 255, 255, 0.1); 
+      border: 1px solid rgba(255, 255, 255, 0.18); 
+      padding: 7px 16px; 
+      border-radius: 30px; 
+      font-size: 12px; 
+      font-weight: 600; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 8px; 
+      backdrop-filter: blur(8px); 
+      color: #f8fafc;
+    }
+
+    .hero-illustration { 
+      width: 220px; 
+      height: 220px; 
+      flex-shrink: 0; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      z-index: 2; 
+    }
+
+    .hero-illustration svg { 
+      width: 100%; 
+      height: 100%; 
+      filter: drop-shadow(0 12px 24px rgba(0,0,0,0.3)); 
+    }
+
+    /* Seções e Titulos da Home */
+    .secao-titulo { 
+      color: #16472b; 
+      font-size: 22px; 
+      font-weight: 800; 
+      margin-bottom: 20px; 
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      letter-spacing: -0.3px;
+    }
+
+    .secao-titulo svg { fill: #16472b; width: 24px; height: 24px; }
+
+    .grid-apresentacao { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); 
+      gap: 24px; 
+      margin-bottom: 40px; 
+    }
+
+    .card-pilares { 
+      background: white; 
+      padding: 30px; 
+      border-radius: 16px; 
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+      border: 1px solid #e2e8f0; 
+      transition: all 0.25s ease; 
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card-pilares:hover { 
+      transform: translateY(-4px); 
+      box-shadow: 0 12px 30px rgba(22, 71, 43, 0.1); 
+      border-color: #10b981;
+    }
+
+    .card-pilares .icone-box { 
+      width: 58px; 
+      height: 58px; 
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%); 
+      border-radius: 14px; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      margin-bottom: 18px; 
+      color: #16472b; 
+      box-shadow: 0 4px 10px rgba(16, 185, 129, 0.12);
+    }
+
+    .card-pilares h3 { margin: 0 0 10px 0; color: #16472b; font-size: 18px; font-weight: 700; }
+    .card-pilares p { font-size: 14px; color: #64748b; line-height: 1.6; margin: 0; }
+
+    .grid-atalhos { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); 
+      gap: 20px; 
+    }
+
+    .btn-atalho-card { 
+      background: white; 
+      border: 1px solid #e2e8f0; 
+      padding: 26px 20px; 
+      border-radius: 16px; 
+      text-align: center; 
+      cursor: pointer; 
+      transition: all 0.25s ease; 
+      box-shadow: 0 2px 10px rgba(0,0,0,0.02); 
+    }
+
+    .btn-atalho-card:hover { 
+      border-color: #10b981; 
+      transform: translateY(-4px); 
+      box-shadow: 0 10px 25px rgba(22, 71, 43, 0.12); 
+    }
+
+    .btn-atalho-card .box-icone-atalho { 
+      width: 52px; 
+      height: 52px; 
+      background: #f0fdf4; 
+      border-radius: 50%; 
+      display: flex; 
+      align-items: center; 
+      justify-content: center; 
+      margin: 0 auto 14px auto; 
+      color: #16472b; 
+      box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+    }
+
+    .btn-atalho-card h4 { margin: 0 0 6px 0; color: #16472b; font-size: 15px; font-weight: 700; }
+    .btn-atalho-card span { font-size: 12px; color: #64748b; display: block; line-height: 1.4; }
+
+    /* Calendário */
+    .calendar-card { background: white; padding: 24px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-bottom: 28px; border: 1px solid #e2e8f0; }
+    .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; }
+    .calendar-header h2 { margin: 0; color: #16472b; font-size: 19px; text-transform: uppercase; font-weight: 800; letter-spacing: -0.3px; }
+    
+    .calendar-nav-btn { 
+      background: #f1f5f9; 
+      border: none; 
+      color: #16472b; 
+      padding: 8px 16px; 
+      border-radius: 8px; 
+      font-weight: 700; 
+      cursor: pointer; 
+      font-size: 12px; 
+      transition: all 0.2s;
+    }
+
+    .calendar-nav-btn:hover { background: #16472b; color: white; }
+
+    .grid-calendario { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; text-align: center; }
+    .dia-semana { font-weight: 800; padding: 8px 0; background: #f1f5f9; color: #16472b; border-radius: 6px; font-size: 12px; }
+    
+    .celula-dia { 
+      background: #fafafa; 
+      border: 1px solid #e2e8f0; 
+      min-height: 90px; 
+      border-radius: 8px; 
+      padding: 6px; 
+      font-size: 11px; 
+      display: flex; 
+      flex-direction: column; 
+      align-items: flex-start; 
+      justify-content: flex-start; 
+    }
+
+    .celula-dia .numero-dia { font-weight: 800; margin-bottom: 4px; color: #64748b; }
+    .celula-dia.hoje { border: 2px solid #10b981; background: #f0fdf4; }
+    
+    .evento-tag { 
+      background: #dcfce7; 
+      color: #14532d; 
+      border-left: 3px solid #16a34a; 
+      padding: 4px 6px; 
+      border-radius: 4px; 
+      font-size: 10px; 
+      text-align: left; 
+      width: 90%; 
+      margin-top: 3px; 
+      font-weight: 700; 
+    }
+
+    /* Playlist */
+    .yt-playlist-container { background: #ffffff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.04); border: 1px solid #e2e8f0; margin-bottom: 28px; }
+    .yt-header { background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%); color: white; padding: 24px; display: flex; gap: 24px; align-items: center; }
+    .yt-banner { width: 150px; height: 85px; background: #16472b; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 35px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); color: white; }
+    .yt-info h2 { margin: 0 0 4px 0; font-size: 20px; font-weight: 800; }
+    .yt-info p { margin: 0 0 8px 0; font-size: 13px; color: #94a3b8; }
+    .yt-stats { font-size: 12px; color: #64748b; margin-bottom: 12px; }
+    .btn-play-all { background: white; color: black; border: none; padding: 8px 18px; border-radius: 20px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: 12px; }
+    
+    .yt-list { padding: 8px 0; }
+    .yt-item { display: flex; gap: 16px; padding: 14px 24px; border-bottom: 1px solid #f1f5f9; align-items: center; }
+    .yt-thumb { width: 110px; height: 62px; background: #16472b; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; position: relative; flex-shrink: 0; }
+    .yt-duration { position: absolute; bottom: 4px; right: 4px; background: rgba(0,0,0,0.8); color: white; font-size: 9px; padding: 1px 5px; border-radius: 3px; font-weight: 600; }
+    .yt-details h4 { margin: 0 0 4px 0; font-size: 14px; color: #0f172a; font-weight: 700; }
+    .yt-details p { margin: 0; font-size: 12px; color: #64748b; }
 
     /* Aba Cultivos Ativos & Pesquisa */
-    .cultivos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
-    .card-cultivo-ativo { background: white; border-radius: 12px; border: 1px solid #e0e0e0; box-shadow: 0 4px 12px rgba(0,0,0,0.05); padding: 20px; display: flex; flex-direction: column; justify-content: space-between; }
-    .cultivo-header { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; border-bottom: 1px solid #eee; padding-bottom: 10px; }
-    .cultivo-icone { font-size: 32px; background: #eef2f0; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
-    .cultivo-info h3 { margin: 0; color: #1e5e3a; font-size: 16px; font-weight: 700; }
-    .cultivo-info span { font-size: 11px; color: #777; }
-    .cultivo-detalhes p { margin: 4px 0; font-size: 12px; color: #555; }
-    .btn-dar-baixa { background: #d9534f; color: white; border: none; padding: 8px 12px; border-radius: 6px; font-weight: bold; cursor: pointer; width: 100%; margin-top: 6px; font-size: 12px; transition: 0.2s; }
-    .btn-dar-baixa:hover { background: #c9302c; }
+    .cultivos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 24px; }
+    
+    .card-cultivo-ativo { 
+      background: white; 
+      border-radius: 16px; 
+      border: 1px solid #e2e8f0; 
+      box-shadow: 0 4px 20px rgba(0,0,0,0.03); 
+      padding: 24px; 
+      display: flex; 
+      flex-direction: column; 
+      justify-content: space-between; 
+    }
+
+    .cultivo-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; }
+    .cultivo-icone { font-size: 30px; background: #f0fdf4; width: 52px; height: 52px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #16472b; }
+    .cultivo-info h3 { margin: 0; color: #16472b; font-size: 17px; font-weight: 800; }
+    .cultivo-info span { font-size: 12px; color: #64748b; }
+    .cultivo-detalhes p { margin: 5px 0; font-size: 13px; color: #334155; }
+    
+    .btn-dar-baixa { 
+      background: #ef4444; 
+      color: white; 
+      border: none; 
+      padding: 10px 14px; 
+      border-radius: 8px; 
+      font-weight: 700; 
+      cursor: pointer; 
+      width: 100%; 
+      margin-top: 8px; 
+      font-size: 13px; 
+      transition: 0.2s; 
+    }
+
+    .btn-dar-baixa:hover { background: #dc2626; }
 
     /* Card de Histórico */
-    .card-historico { background: white; padding: 20px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); margin-top: 25px; }
-    .card-header-flex { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eef2f0; padding-bottom: 8px; margin-bottom: 10px; }
-    .card-header-flex h3 { margin: 0; color: #1e5e3a; font-size: 16px; }
-    .item-historico { padding: 10px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
-    .item-historico:last-child { border-bottom: none; }
+    .card-historico { background: white; padding: 24px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); margin-top: 28px; border: 1px solid #e2e8f0; }
+    .card-header-flex { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 10px; margin-bottom: 12px; }
+    .card-header-flex h3 { margin: 0; color: #16472b; font-size: 17px; font-weight: 800; }
+    .item-historico { padding: 12px; border-bottom: 1px solid #f1f5f9; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
 
     /* Caixas Expansíveis (Aba Dados) */
-    .secao-dados-container { display: flex; flex-direction: column; gap: 15px; }
-    .card-expansivel { background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; border: 1px solid #e0e0e0; }
-    .cabecalho-expansivel { padding: 18px 24px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; transition: background 0.2s; }
-    .cabecalho-expansivel:hover { background: #f8faf9; }
-    .cabecalho-expansivel h3 { margin: 0; color: #1e5e3a; font-size: 17px; display: flex; align-items: center; gap: 10px; }
-    .seta-icone { font-size: 16px; color: #1e5e3a; transition: transform 0.3s ease; font-weight: bold; }
+    .secao-dados-container { display: flex; flex-direction: column; gap: 18px; }
+    .card-expansivel { background: white; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); overflow: hidden; border: 1px solid #e2e8f0; }
+    .cabecalho-expansivel { padding: 20px 28px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; user-select: none; transition: background 0.2s; }
+    .cabecalho-expansivel:hover { background: #f8fafc; }
+    .cabecalho-expansivel h3 { margin: 0; color: #16472b; font-size: 18px; display: flex; align-items: center; gap: 12px; font-weight: 800; }
+    .seta-icone { font-size: 14px; color: #16472b; transition: transform 0.3s ease; font-weight: bold; }
     .card-expansivel.aberto .seta-icone { transform: rotate(180deg); }
     
-    .conteudo-expansivel { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease; padding: 0 24px; background: #fafafa; border-top: 0px solid #eee; }
-    .card-expansivel.aberto .conteudo-expansivel { max-height: 350px; padding: 20px 24px; border-top: 1px solid #eee; }
+    .conteudo-expansivel { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out, padding 0.3s ease; padding: 0 28px; background: #fafafa; }
+    .card-expansivel.aberto .conteudo-expansivel { max-height: 380px; padding: 24px 28px; border-top: 1px solid #f1f5f9; }
     
-    .grid-sensores { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-    .sensor-box { background: white; padding: 15px; border-radius: 8px; border: 1px solid #e5e5e5; text-align: center; }
-    .sensor-box span { font-size: 12px; color: #666; display: block; }
-    .sensor-box strong { font-size: 22px; color: #1e5e3a; margin-top: 5px; display: block; }
+    .grid-sensores { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+    .sensor-box { background: white; padding: 18px; border-radius: 12px; border: 1px solid #e2e8f0; text-align: center; }
+    .sensor-box span { font-size: 12px; color: #64748b; display: block; font-weight: 600; }
+    .sensor-box strong { font-size: 24px; color: #16472b; margin-top: 6px; display: block; font-weight: 800; }
 
-    /* Modal Overlay & Box */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 100; }
-    .modal-content { background: white; padding: 25px; border-radius: 12px; width: 450px; max-width: 90%; }
-    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 15px; }
-    .modal-header h3 { margin: 0; color: #1e5e3a; }
-    .btn-fechar { background: none; border: none; font-size: 20px; cursor: pointer; color: #888; }
-    .card-modulo { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+    /* Modais */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(15, 23, 42, 0.6); display: none; justify-content: center; align-items: center; z-index: 100; backdrop-filter: blur(4px); }
+    .modal-content { background: white; padding: 30px; border-radius: 16px; width: 480px; max-width: 90%; box-shadow: 0 20px 40px rgba(0,0,0,0.25); }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #f1f5f9; padding-bottom: 12px; margin-bottom: 18px; }
+    .modal-header h3 { margin: 0; color: #16472b; font-size: 18px; font-weight: 800; }
+    .btn-fechar { background: none; border: none; font-size: 22px; cursor: pointer; color: #94a3b8; }
+    .card-modulo { background: white; padding: 28px; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.03); border: 1px solid #e2e8f0; }
   </style>
 </head>
 <body>
 
+  <!-- HEADER NAVEGAÇÃO -->
   <header>
-    <h1>🌱 BioCiclo <span style="font-size: 11px; background: #28a745; padding: 3px 8px; border-radius: 10px;">Horta Tech</span></h1>
+    <h1>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#34d399" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-9"/><path d="M12 13a7 7 0 0 0 7-7 7 7 0 0 0-7 7Z"/><path d="M12 13a7 7 0 0 1-7-7 7 7 0 0 1 7 7Z"/></svg>
+      BioCiclo <span class="badge-verde">Horta Tech</span>
+    </h1>
     <div class="header-logos">
       <span class="badge-sesi-senai">SESI SENAI</span>
     </div>
     <nav>
       <ul>
-        <li><a class="nav-aba active" onclick="trocarAba('calendario', this)">Calendário</a></li>
-        <li><a class="nav-aba" onclick="trocarAba('cultivos', this)">Cultivos Ativos</a></li>
-        <li><a class="nav-aba" onclick="trocarAba('pesquisa', this)">Pesquisa de Espécies</a></li>
-        <li><a class="nav-aba" onclick="trocarAba('dados', this)">Dados</a></li>
-        <li><a class="nav-aba" onclick="trocarAba('videos', this)">Vídeos Educativos</a></li>
+        <li><a id="nav-inicio" class="nav-aba active" onclick="trocarAba('inicio', this)">Início</a></li>
+        <li><a id="nav-calendario" class="nav-aba" onclick="trocarAba('calendario', this)">Calendário</a></li>
+        <li><a id="nav-cultivos" class="nav-aba" onclick="trocarAba('cultivos', this)">Cultivos Ativos</a></li>
+        <li><a id="nav-pesquisa" class="nav-aba" onclick="trocarAba('pesquisa', this)">Pesquisa de Espécies</a></li>
+        <li><a id="nav-dados" class="nav-aba" onclick="trocarAba('dados', this)">Dados</a></li>
+        <li><a id="nav-videos" class="nav-aba" onclick="trocarAba('videos', this)">Vídeos Educativos</a></li>
       </ul>
     </nav>
   </header>
 
-  <div class="container">
+  <!-- ABA INÍCIO (HOMEPAGE DE APRESENTAÇÃO EXPANDIDA) -->
+  <div id="aba-inicio" class="aba-conteudo ativa">
+    <div class="container-full">
+      
+      <!-- HERO BANNER IMPONENTE -->
+      <div class="hero-banner">
+        <div class="hero-text">
+          <div class="hero-badges">
+            <span class="hero-tag">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+              Projeto Educacional SESI SENAI
+            </span>
+            <span class="hero-tag">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              Automação & IoT
+            </span>
+            <span class="hero-tag">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22v-9"/><path d="M12 13a7 7 0 0 0 7-7 7 7 0 0 0-7 7Z"/></svg>
+              Sustentabilidade Agroecológica
+            </span>
+          </div>
+          <h2>BioCiclo — Plataforma Horta Tech</h2>
+          <p>
+            Uma plataforma integrada desenvolvida para gerenciar, automatizar e monitorar a horta comunitária e escolar do <strong>SESI SENAI</strong>. 
+            Unimos tecnologia de ponta, ciências biológicas e educação prática para transformar o cultivo de hortaliças em um ciclo eficiente e sustentável.
+          </p>
+        </div>
+
+        <div class="hero-illustration">
+          <svg viewBox="0 0 200 200" fill="none">
+            <circle cx="100" cy="100" r="85" fill="rgba(255,255,255,0.06)" />
+            <path d="M100 155 V80" stroke="#34d399" stroke-width="6" stroke-linecap="round"/>
+            <path d="M100 110 C135 75, 165 95, 155 130 C125 140, 100 120, 100 110 Z" fill="#10b981"/>
+            <path d="M100 90 C65 55, 35 75, 45 110 C75 120, 100 100, 100 90 Z" fill="#34d399"/>
+            <circle cx="100" cy="55" r="14" fill="#fbbf24"/>
+          </svg>
+        </div>
+      </div>
+
+      <!-- PILARES DA PLATAFORMA -->
+      <div class="secao-titulo">
+        <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+        Pilares da Plataforma BioCiclo
+      </div>
+      <div class="grid-apresentacao">
+        <div class="card-pilares">
+          <div class="icone-box">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </div>
+          <h3>Automação & IoT (2º A e 2º D)</h3>
+          <p>Sistemas automatizados de irrigação, controle de microclima e leitura contínua de sensores ambientais para garantir condições ideais ao solo e às plantas.</p>
+        </div>
+
+        <div class="card-pilares">
+          <div class="icone-box">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <h3>Pesquisa & Manejo (2º C)</h3>
+          <p>Catálogo agronômico das espécies, fichas técnicas científicas e acompanhamento detalhado de todas as fases de desenvolvimento do plantio à colheita.</p>
+        </div>
+
+        <div class="card-pilares">
+          <div class="icone-box">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/></svg>
+          </div>
+          <h3>Uso Consciente da Água</h3>
+          <p>Monitoramento contínuo de reservatórios de água da chuva (cisterna), otimizando regas e reduzindo o desperdício de recursos hídricos.</p>
+        </div>
+      </div>
+
+      <!-- ATALHOS MÓDULOS -->
+      <div class="secao-titulo">
+        <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        Acesso Rápido aos Módulos
+      </div>
+      <div class="grid-atalhos">
+        <div class="btn-atalho-card" onclick="irParaAba('calendario')">
+          <div class="box-icone-atalho">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          </div>
+          <h4>Calendário de Cultivo</h4>
+          <span>Programe datas de plantio e colheita</span>
+        </div>
+
+        <div class="btn-atalho-card" onclick="irParaAba('cultivos')">
+          <div class="box-icone-atalho">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          </div>
+          <h4>Cultivos Ativos</h4>
+          <span>Acompanhe o progresso do canteiro</span>
+        </div>
+
+        <div class="btn-atalho-card" onclick="irParaAba('pesquisa')">
+          <div class="box-icone-atalho">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          </div>
+          <h4>Pesquisa de Espécies</h4>
+          <span>Fichas técnicas e solo</span>
+        </div>
+
+        <div class="btn-atalho-card" onclick="irParaAba('dados')">
+          <div class="box-icone-atalho">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h4>Dados em Tempo Real</h4>
+          <span>Sensores e climatização</span>
+        </div>
+
+        <div class="btn-atalho-card" onclick="irParaAba('videos')">
+          <div class="box-icone-atalho">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg>
+          </div>
+          <h4>Vídeos Educativos</h4>
+          <span>Aulas práticas desenvolvidas</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CONTAINER PARA AS OUTRAS ABAS COM PAINEL LATERAL -->
+  <div class="container" id="containerComSidebar" style="display: none;">
     <aside class="sidebar">
       <h3>Agendamento do Cultivo</h3>
 
@@ -151,12 +660,14 @@
         <input type="date" id="inputData" onchange="atualizarInterface()">
       </div>
 
-      <button class="btn-cadastrar" onclick="iniciarCultivoOficial()">🚀 Confirmar & Registrar Plantio</button>
+      <button class="btn-cadastrar" onclick="iniciarCultivoOficial()">
+        Confirmar & Registrar Plantio
+      </button>
     </aside>
 
     <main>
-      <!-- ABA 1: CALENDÁRIO & PLAYLIST -->
-      <div id="aba-calendario" class="aba-conteudo ativa">
+      <!-- ABA CALENDÁRIO -->
+      <div id="aba-calendario" class="aba-conteudo">
         <div class="calendar-card">
           <div class="calendar-header">
             <button class="calendar-nav-btn" onclick="mudarMes(-1)">◄ Anterior</button>
@@ -179,7 +690,6 @@
           <div class="grid-calendario" id="diasContainer" style="margin-top: 6px;"></div>
         </div>
 
-        <!-- PLAYLIST ESTILO YOUTUBE -->
         <div class="yt-playlist-container">
           <div class="yt-header">
             <div class="yt-banner" id="ytBanner">🌱</div>
@@ -193,60 +703,58 @@
           <div class="yt-list" id="containerPlaylist"></div>
         </div>
 
-        <!-- HISTÓRICO DE PROGRAMAÇÕES -->
         <div class="card-historico" style="margin-top: 0;">
           <div class="card-header-flex">
-            <h3>📜 Histórico de Agendamentos Realizados</h3>
-            <button class="calendar-nav-btn" onclick="limparHistorico()" style="color: #d9534f; font-size: 11px;">🗑️ Limpar Histórico</button>
+            <h3>Histórico de Agendamentos Realizados</h3>
+            <button class="calendar-nav-btn" onclick="limparHistorico()" style="color: #ef4444; font-size: 11px;">Limpar Histórico</button>
           </div>
           <div id="containerHistorico"></div>
         </div>
       </div>
 
-      <!-- ABA 2: CULTIVOS ATIVOS -->
+      <!-- ABA CULTIVOS ATIVOS -->
       <div id="aba-cultivos" class="aba-conteudo">
-        <div class="card-modulo" style="margin-bottom: 20px;">
-          <h2>🧺 Acompanhamento dos Cultivos Plantados</h2>
-          <p style="font-size: 13px; color: #666;">Gerencie os canteiros, acompanhe o progresso do ciclo e registre os ajustes de manejo.</p>
+        <div class="card-modulo" style="margin-bottom: 24px;">
+          <h2>Acompanhamento dos Cultivos Plantados</h2>
+          <p style="font-size: 13px; color: #64748b;">Gerencie os canteiros, acompanhe o progresso do ciclo e registre os ajustes de manejo.</p>
         </div>
         
         <div id="listaCultivosAtivos" class="cultivos-grid"></div>
 
-        <!-- HISTÓRICO DE BAIXAS -->
         <div class="card-historico">
           <div class="card-header-flex">
-            <h3>📜 Histórico de Cultivos Finalizados (Baixas)</h3>
-            <button class="calendar-nav-btn" onclick="limparHistoricoBaixas()" style="color: #d9534f; font-size: 11px;">🗑️ Limpar Baixas</button>
+            <h3>Histórico de Cultivos Finalizados (Baixas)</h3>
+            <button class="calendar-nav-btn" onclick="limparHistoricoBaixas()" style="color: #ef4444; font-size: 11px;">Limpar Baixas</button>
           </div>
           <div id="containerHistoricoBaixas"></div>
         </div>
       </div>
 
-      <!-- ABA 3: PESQUISA DE ESPÉCIES -->
+      <!-- ABA PESQUISA -->
       <div id="aba-pesquisa" class="aba-conteudo">
-        <div class="card-modulo" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <div class="card-modulo" style="margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
           <div>
-            <h2>📚 Pesquisa de Espécies & Necessidades</h2>
-            <p style="font-size: 13px; color: #666; margin: 4px 0 0 0;">Informações agronômicas e científicas de cada cultivar. Cadastre novas espécies ou pesquisas.</p>
+            <h2>Pesquisa de Espécies & Necessidades</h2>
+            <p style="font-size: 13px; color: #64748b; margin: 4px 0 0 0;">Informações agronômicas e científicas de cada cultivar. Cadastre novas espécies ou pesquisas.</p>
           </div>
           <div style="display: flex; gap: 10px;">
-            <button class="btn-cadastrar" onclick="abrirModalNovaEspecie()" style="width: auto; padding: 9px 15px; margin-top: 0;">+ Cadastrar Nova Hortaliça</button>
-            <button class="btn-secundario" onclick="abrirModalPesquisa()" style="width: auto; padding: 9px 15px; margin-top: 0;">+ Cadastrar / Editar Pesquisa</button>
+            <button class="btn-cadastrar" onclick="abrirModalNovaEspecie()" style="width: auto; padding: 10px 18px; margin-top: 0;">+ Cadastrar Nova Hortaliça</button>
+            <button class="btn-secundario" onclick="abrirModalPesquisa()" style="width: auto; padding: 10px 18px; margin-top: 0;">+ Cadastrar / Editar Pesquisa</button>
           </div>
         </div>
         <div id="listaPesquisas" class="cultivos-grid"></div>
       </div>
 
-      <!-- ABA 4: DADOS (COM CAIXAS EXPANSÍVEIS) -->
+      <!-- ABA DADOS -->
       <div id="aba-dados" class="aba-conteudo">
         <div class="secao-dados-container">
           <div class="card-expansivel">
             <div class="cabecalho-expansivel" onclick="toggleCaixa(this)">
-              <h3>🌦️ Estação Meteorológica</h3>
+              <h3>Estação Meteorológica</h3>
               <span class="seta-icone">▼</span>
             </div>
             <div class="conteudo-expansivel">
-              <p style="font-size: 13px; color: #666; margin-top: 0;">Dados lidos em tempo real pelos sensores da horta:</p>
+              <p style="font-size: 13px; color: #64748b; margin-top: 0;">Dados lidos em tempo real pelos sensores da horta:</p>
               <div class="grid-sensores">
                 <div class="sensor-box"><span>Temperatura do Ar</span><strong>24.5 °C</strong></div>
                 <div class="sensor-box"><span>Umidade do Ar</span><strong>68 %</strong></div>
@@ -257,12 +765,12 @@
 
           <div class="card-expansivel">
             <div class="cabecalho-expansivel" onclick="toggleCaixa(this)">
-              <h3>📹 Câmeras Ao Vivo</h3>
+              <h3>Câmeras Ao Vivo</h3>
               <span class="seta-icone">▼</span>
             </div>
             <div class="conteudo-expansivel">
-              <p style="font-size: 13px; color: #666; margin-top: 0;">Transmissão ao vivo dos canteiros para acompanhamento do crescimento:</p>
-              <div style="background: #222; color: white; height: 160px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 14px;">
+              <p style="font-size: 13px; color: #64748b; margin-top: 0;">Transmissão ao vivo dos canteiros para acompanhamento do crescimento:</p>
+              <div style="background: #0f172a; color: white; height: 180px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 600;">
                 🔴 Transmissão Ao Vivo (Canteiro Principal)
               </div>
             </div>
@@ -270,26 +778,26 @@
 
           <div class="card-expansivel">
             <div class="cabecalho-expansivel" onclick="toggleCaixa(this)">
-              <h3>💧 Irrigação & Climatização</h3>
+              <h3>Irrigação & Climatização</h3>
               <span class="seta-icone">▼</span>
             </div>
             <div class="conteudo-expansivel">
-              <p style="font-size: 13px; color: #666; margin-top: 0;">Status de acionamento dos atuadores e bombas:</p>
+              <p style="font-size: 13px; color: #64748b; margin-top: 0;">Status de acionamento dos atuadores e bombas:</p>
               <div class="grid-sensores">
-                <div class="sensor-box"><span>Bomba de Irrigação</span><strong style="color: #28a745;">DESLIGADA</strong></div>
-                <div class="sensor-box"><span>Solenóide Setor A</span><strong style="color: #28a745;">FECHADA</strong></div>
-                <div class="sensor-box"><span>Ventilação / Exaustor</span><strong style="color: #d9534f;">LIGADO</strong></div>
+                <div class="sensor-box"><span>Bomba de Irrigação</span><strong style="color: #10b981;">DESLIGADA</strong></div>
+                <div class="sensor-box"><span>Solenóide Setor A</span><strong style="color: #10b981;">FECHADA</strong></div>
+                <div class="sensor-box"><span>Ventilação / Exaustor</span><strong style="color: #ef4444;">LIGADO</strong></div>
               </div>
             </div>
           </div>
 
           <div class="card-expansivel">
             <div class="cabecalho-expansivel" onclick="toggleCaixa(this)">
-              <h3>🚰 Cisterna</h3>
+              <h3>Cisterna</h3>
               <span class="seta-icone">▼</span>
             </div>
             <div class="conteudo-expansivel">
-              <p style="font-size: 13px; color: #666; margin-top: 0;">Monitoramento de captação e reserva de água de reuso:</p>
+              <p style="font-size: 13px; color: #64748b; margin-top: 0;">Monitoramento de captação e reserva de água de reuso:</p>
               <div class="grid-sensores">
                 <div class="sensor-box"><span>Nível do Reservatório</span><strong>85 %</strong></div>
                 <div class="sensor-box"><span>Volume Estimado</span><strong>425 Litros</strong></div>
@@ -300,17 +808,17 @@
         </div>
       </div>
 
-      <!-- ABA 5: VÍDEOS EDUCATIVOS -->
+      <!-- ABA VÍDEOS -->
       <div id="aba-videos" class="aba-conteudo">
         <div class="card-modulo">
-          <h2>🎥 Vídeos Educativos</h2>
+          <h2>Vídeos Educativos</h2>
           <p>Biblioteca completa de conteúdos em vídeo das turmas do 2º D, 2º A e 2º C.</p>
         </div>
       </div>
     </main>
   </div>
 
-  <!-- MODAL 1: CADASTRAR NOVA HORTALIÇA -->
+  <!-- MODAIS -->
   <div class="modal-overlay" id="modalNovaEspecie">
     <div class="modal-content">
       <div class="modal-header">
@@ -323,7 +831,7 @@
           <input type="text" id="novoNome" placeholder="Ex: Cenoura" required>
         </div>
         <div class="form-group">
-          <label>Ícone (Emoji)</label>
+          <label>Ícone (Emoji / Símbolo)</label>
           <input type="text" id="novoIcone" placeholder="Ex: 🥕" value="🌱" required>
         </div>
         <div class="form-group">
@@ -335,7 +843,6 @@
     </div>
   </div>
 
-  <!-- MODAL 2: CADASTRAR / EDITAR PESQUISA CIENTÍFICA -->
   <div class="modal-overlay" id="modalPesquisa">
     <div class="modal-content">
       <div class="modal-header">
@@ -460,11 +967,25 @@
     function trocarAba(nomeAba, el) {
       document.querySelectorAll('.aba-conteudo').forEach(div => div.classList.remove('ativa'));
       document.querySelectorAll('.nav-aba').forEach(a => a.classList.remove('active'));
+      
       document.getElementById('aba-' + nomeAba).classList.add('ativa');
-      el.classList.add('active');
+      if (el) el.classList.add('active');
+
+      const containerComSidebar = document.getElementById('containerComSidebar');
+      if (nomeAba === 'inicio') {
+        containerComSidebar.style.display = 'none';
+      } else {
+        containerComSidebar.style.display = 'grid';
+      }
 
       if (nomeAba === 'cultivos') renderizarCultivosAtivos();
       if (nomeAba === 'pesquisa') renderizarPesquisas();
+      if (nomeAba === 'calendario') atualizarInterface();
+    }
+
+    function irParaAba(nomeAba) {
+      const elNav = document.getElementById('nav-' + nomeAba);
+      trocarAba(nomeAba, elNav);
     }
 
     function toggleCaixa(elementoCabecalho) {
@@ -597,7 +1118,7 @@
       container.innerHTML = '';
 
       if (cultivosAtivos.length === 0) {
-        container.innerHTML = `<p style="grid-column: 1/-1; color: #777; text-align: center;">Nenhum cultivo ativo no momento. Confirme um plantio no painel lateral!</p>`;
+        container.innerHTML = `<p style="grid-column: 1/-1; color: #64748b; text-align: center;">Nenhum cultivo ativo no momento. Confirme um plantio no painel lateral!</p>`;
       } else {
         cultivosAtivos.forEach(c => {
           const card = document.createElement('div');
@@ -614,35 +1135,35 @@
               <div class="cultivo-detalhes">
                 <p>📅 Previsão Colheita: <strong>${c.dataColheita}</strong></p>
                 
-                <div style="margin: 10px 0;">
-                  <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 3px;">
+                <div style="margin: 12px 0;">
+                  <div style="display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 4px; font-weight: 600;">
                     <span>Progresso do Ciclo:</span>
                     <strong id="progressoTexto-${c.id}">${c.progressoManual}%</strong>
                   </div>
-                  <div style="background: #e0e0e0; border-radius: 4px; height: 8px; width: 100%; overflow: hidden;">
-                    <div id="progressoBarra-${c.id}" style="background: #28a745; width: ${c.progressoManual}%; height: 100%; transition: width 0.3s ease;"></div>
+                  <div style="background: #e2e8f0; border-radius: 6px; height: 10px; width: 100%; overflow: hidden;">
+                    <div id="progressoBarra-${c.id}" style="background: linear-gradient(90deg, #10b981 0%, #059669 100%); width: ${c.progressoManual}%; height: 100%; transition: width 0.3s ease;"></div>
                   </div>
                 </div>
 
-                <div class="form-group" style="margin-top: 8px;">
+                <div class="form-group" style="margin-top: 10px;">
                   <label>Fase do Desenvolvimento:</label>
                   <select id="selectFase-${c.id}" onchange="atualizarFaseEProgresso(${c.id}, this.value)">
-                    <option value="Germinação" ${c.faseAtual === 'Germinação' ? 'selected' : ''}>🌱 Germinação (15%)</option>
-                    <option value="Crescimento / Manejo" ${c.faseAtual === 'Crescimento / Manejo' ? 'selected' : ''}>🌿 Crescimento / Manejo (45%)</option>
-                    <option value="Floração / Frutificação" ${c.faseAtual === 'Floração / Frutificação' ? 'selected' : ''}>🌼 Floração / Frutificação (75%)</option>
-                    <option value="Pronta para Colheita" ${c.faseAtual === 'Pronta para Colheita' ? 'selected' : ''}>🧺 Pronta para Colheita (100%)</option>
+                    <option value="Germinação" ${c.faseAtual === 'Germinação' ? 'selected' : ''}>Germinação (15%)</option>
+                    <option value="Crescimento / Manejo" ${c.faseAtual === 'Crescimento / Manejo' ? 'selected' : ''}>Crescimento / Manejo (45%)</option>
+                    <option value="Floração / Frutificação" ${c.faseAtual === 'Floração / Frutificação' ? 'selected' : ''}>Floração / Frutificação (75%)</option>
+                    <option value="Pronta para Colheita" ${c.faseAtual === 'Pronta para Colheita' ? 'selected' : ''}>Pronta para Colheita (100%)</option>
                   </select>
                 </div>
 
-                <div class="form-group" style="margin-top: 6px;">
-                  <label>📝 Registrar Alteração / Manejo (ex: Atraso):</label>
+                <div class="form-group" style="margin-top: 8px;">
+                  <label>Registrar Alteração / Manejo (ex: Atraso):</label>
                   <input type="text" id="obsInput-${c.id}" value="${c.observacao}" placeholder="Ex: Atraso no estaqueamento...">
                 </div>
               </div>
             </div>
             <div>
-              <button class="btn-atualizar" onclick="salvarAlteracoesCultivo(${c.id})">💾 Atualizar Cultivo</button>
-              <button class="btn-dar-baixa" onclick="darBaixaCultivo(${c.id})">✅ Dar Baixa (Finalizar)</button>
+              <button class="btn-atualizar" onclick="salvarAlteracoesCultivo(${c.id})">Atualizar Cultivo</button>
+              <button class="btn-dar-baixa" onclick="darBaixaCultivo(${c.id})">Dar Baixa (Finalizar)</button>
             </div>
           `;
           container.appendChild(card);
@@ -729,7 +1250,7 @@
       container.innerHTML = '';
 
       if (historicoBaixas.length === 0) {
-        container.innerHTML = '<p style="font-size: 12px; color: #777; margin: 5px 0;">Nenhum cultivo finalizado até o momento.</p>';
+        container.innerHTML = '<p style="font-size: 12px; color: #64748b; margin: 5px 0;">Nenhum cultivo finalizado até o momento.</p>';
         return;
       }
 
@@ -738,9 +1259,9 @@
           <div class="item-historico">
             <div>
               <span>${b.icone} <strong>${b.nome}</strong> — Plantado em: ${b.dataPlantio} | Baixa em: <strong>${b.dataBaixa}</strong> (${b.faseFinal})</span>
-              <br><span style="font-size: 11px; color: #555;">📝 ${b.observacao}</span>
+              <br><span style="font-size: 11px; color: #64748b;">Observação: ${b.observacao}</span>
             </div>
-            <button class="calendar-nav-btn" onclick="desfazerBaixa(${b.id})" style="background-color: #e2e8f0; color: #1e5e3a; font-weight: bold; padding: 5px 10px; font-size: 11px;">↩️ Desfazer</button>
+            <button class="calendar-nav-btn" onclick="desfazerBaixa(${b.id})" style="background-color: #e2e8f0; color: #16472b; font-weight: bold; padding: 6px 12px; font-size: 11px;">Desfazer</button>
           </div>
         `;
       });
@@ -769,11 +1290,11 @@
               </div>
             </div>
             <div class="cultivo-detalhes">
-              <p>📖 <strong>Pesquisa Científica & Rega:</strong></p>
-              <p style="font-size: 11px; color: #666; line-height: 1.4;">${item.pesquisaInfo || "Nenhuma pesquisa cadastrada."}</p>
+              <p><strong>Pesquisa Científica & Rega:</strong></p>
+              <p style="font-size: 12px; color: #64748b; line-height: 1.5;">${item.pesquisaInfo || "Nenhuma pesquisa cadastrada."}</p>
             </div>
           </div>
-          <button class="btn-dar-baixa" style="background-color: #d9534f; margin-top: 10px;" onclick="excluirPesquisa('${chave}')">🗑️ Excluir Pesquisa</button>
+          <button class="btn-dar-baixa" style="background-color: #ef4444; margin-top: 12px;" onclick="excluirPesquisa('${chave}')">Excluir Pesquisa</button>
         `;
         container.appendChild(card);
       }
@@ -800,14 +1321,14 @@
       const containerHist = document.getElementById('containerHistorico');
       containerHist.innerHTML = '';
       historicoAgendamentos.forEach(item => {
-        containerHist.innerHTML += `<div class="item-historico"><span>🌱 ${item}</span> <span>✅ Ativo</span></div>`;
+        containerHist.innerHTML += `<div class="item-historico"><span>${item}</span> <span style="color: #10b981; font-weight: bold;">Ativo</span></div>`;
       });
     }
 
     function limparHistorico() {
       historicoAgendamentos = [];
       const containerHist = document.getElementById('containerHistorico');
-      containerHist.innerHTML = '<p style="font-size: 12px; color: #777; margin: 5px 0;">Histórico limpo.</p>';
+      containerHist.innerHTML = '<p style="font-size: 12px; color: #64748b; margin: 5px 0;">Histórico limpo.</p>';
     }
 
     function abrirModalNovaEspecie() { document.getElementById('modalNovaEspecie').style.display = 'flex'; }
@@ -828,8 +1349,8 @@
         pesquisaInfo: "Pesquisa em andamento...",
         eventos: [
           { dia: 0, nome: `Plantio ${icone}` },
-          { dia: Math.round(ciclo / 2), nome: "Manejo 💧" },
-          { dia: ciclo, nome: "Colheita 🧺" }
+          { dia: Math.round(ciclo / 2), nome: "Manejo" },
+          { dia: ciclo, nome: "Colheita" }
         ],
         videos: [
           { ep: "Ep. 01", titulo: `HORTA DO ZERO: Ep. 01 - Cultivo de ${nome}`, canal: "Pesquisa Científica (2º C)", tempo: "08:00", icone: icone }
